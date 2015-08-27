@@ -1,0 +1,1 @@
+{"virtualbox":{"/home/vagrant/clockin":{"type":null,"mount_options":[],"guestpath":"/home/vagrant/clockin","hostpath":"/Users/alexandrearaujo/workspace/clockin","disabled":false},"/vagrant":{"guestpath":"/vagrant","hostpath":"/Users/alexandrearaujo/workspace/clockin","disabled":false}}}
