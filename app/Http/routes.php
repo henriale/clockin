@@ -11,6 +11,6 @@
 |
 */
 
-$app->get('/', function () use ($app) {
-    return $app->welcome();
-});
+$app->get('/', ['uses'=>'AppController@home']);
+
+$app->post('/', ['uses'=>'AppController@saveTime']);
