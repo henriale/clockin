@@ -11,6 +11,10 @@
 |
 */
 
-$app->get('/', ['uses'=>'AppController@home']);
+$app->get('/', ['uses'=>'AppController@main']);
 
-$app->post('/', ['uses'=>'AppController@saveTime']);
+$app->post('/workday', ['uses'=>'WorkdayController@store', 'as' => 'workday.store']);
+
+$app->put('/workday/{id}', ['uses'=>'WorkdayController@update', 'as' => 'workday.update']);
+
+$app->delete('/workday/{id}', ['uses'=>'WorkdayController@destroy', 'as' => 'workday.destroy']);

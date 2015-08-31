@@ -4,8 +4,41 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "df4bbc6e714bdabf88cca2d8408356f1",
+    "hash": "78d1b7338b839a395340bf3b78e09614",
     "packages": [
+        {
+            "name": "baao/clear-view-cache",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/baao/ClearViewCache.git",
+                "reference": "bd6b87c2fc5cf8667fbdeb2c5ea62f5b6f50b26c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/baao/ClearViewCache/zipball/bd6b87c2fc5cf8667fbdeb2c5ea62f5b6f50b26c",
+                "reference": "bd6b87c2fc5cf8667fbdeb2c5ea62f5b6f50b26c",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Baao\\ClearViewCache\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "michael",
+                    "email": "info@meine-buybox.de"
+                }
+            ],
+            "description": "Simple View Cache Cleaner for laravel lumen",
+            "time": "2015-08-30 23:47:46"
+        },
         {
             "name": "danielstjules/stringy",
             "version": "1.10.0",
@@ -1228,6 +1261,64 @@
             "description": "The Illuminate View package.",
             "homepage": "http://laravel.com",
             "time": "2015-07-17 15:21:21"
+        },
+        {
+            "name": "jenssegers/mongodb",
+            "version": "v2.1.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jenssegers/laravel-mongodb.git",
+                "reference": "e2bc57c374845ed18ce55e4d8df4b676ae8bac73"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jenssegers/laravel-mongodb/zipball/e2bc57c374845ed18ce55e4d8df4b676ae8bac73",
+                "reference": "e2bc57c374845ed18ce55e4d8df4b676ae8bac73",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/container": "^5.0",
+                "illuminate/database": "^5.0",
+                "illuminate/events": "^5.0",
+                "illuminate/support": "^5.0",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "*",
+                "orchestra/testbench": "3.0.*",
+                "satooshi/php-coveralls": "*"
+            },
+            "suggest": {
+                "jenssegers/mongodb-sentry": "Add Sentry support to Laravel-MongoDB",
+                "jenssegers/mongodb-session": "Add MongoDB session support to Laravel-MongoDB"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Jenssegers\\Mongodb": "src/",
+                    "Jenssegers\\Eloquent": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jens Segers",
+                    "homepage": "http://jenssegers.be"
+                }
+            ],
+            "description": "A MongoDB based Eloquent model and Query builder for Laravel 4",
+            "keywords": [
+                "database",
+                "eloquent",
+                "laravel",
+                "model",
+                "mongo",
+                "mongodb"
+            ],
+            "time": "2015-05-25 09:32:48"
         },
         {
             "name": "laravel/lumen-framework",

@@ -2,20 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use App\Workday;
 
 class AppController extends Controller
 {
-    public function home()
+    public function main()
     {
-        return view('home');
-    }
-    
-    public function saveTime()
-    {
-        return redirect()->back()->with(['message'=>[
-            'type' => 'success',
-            'text' => 'saved',
-        ]]);
+        return view('main', [
+            'workdays' => Workday::orderBy('date', 'DESC')->get(),
+            'month_balance' => Workday::monthBalance()->format('H:i'),
+        ]);
     }
 }

@@ -19,10 +19,6 @@ $app = new Laravel\Lumen\Application(
     realpath(__DIR__.'/../')
 );
 
-$app->withFacades();
-
-$app->withEloquent();
-
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -67,6 +63,9 @@ $app->singleton(
 
 // ]);
 
+/* Enable Facades use */
+$app->withFacades();
+
 /*
 |--------------------------------------------------------------------------
 | Register Service Providers
@@ -78,9 +77,9 @@ $app->singleton(
 |
 */
 
-// $app->register(App\Providers\AppServiceProvider::class);
+$app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
-
+$app->register(Jenssegers\Mongodb\MongodbServiceProvider::class);
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes
@@ -95,5 +94,11 @@ $app->singleton(
 $app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
     require __DIR__.'/../app/Http/routes.php';
 });
+
+/* Enable Eloquent use */
+$app->withEloquent();
+
+/* Load custom configuration */
+$app->configure('database');
 
 return $app;

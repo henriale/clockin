@@ -1,2 +1,15 @@
 /vendor
+/node_modules
+/bootstrap/compiled.php
+/config/ide-helper.php
+/.idea/*
+Homestead.yaml
+Homestead.json
 .env
+_ide_helper.php
+_ide_helper_models.php
+.DS_Store
+Thumbs.db
+composer.lock
+composer.phar
+.phpstorm.meta.php
