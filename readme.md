@@ -1,21 +1,32 @@
-## Lumen PHP Framework
+## Clockin Working Time Manager
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://poser.pugx.org/laravel/lumen-framework/d/total.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/lumen-framework/v/stable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/lumen-framework/v/unstable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://poser.pugx.org/laravel/lumen-framework/license.svg)](https://packagist.org/packages/laravel/lumen-framework)
+Basic application, made with [Lumen Framework](http://lumen.laravel.com/), to store and organize the worked time in a month.
+It calculates the time worked above or under the estimated time based on users' arrivals and leavings from work.
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+## Requirements
+- Composer
+- MongoDB
+- Git (seriously?)
 
-## Official Documentation
+## Getting Started
+##### Download and install 
+```bash
+$ git clone https://github.com/Alexandreh/clockin.git
+$ cd clockin
+$ composer install
+```
 
-Documentation for the framework can be found on the [Lumen website](http://lumen.laravel.com/docs).
+##### Setup environment
+```bash
+$ cp .env.example .env
+$ vim .env
+```
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+##### Run Server
+```bash
+$ php artisan serve
+```
 
 ### License
 
-The Lumen framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+The Clockin App is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
