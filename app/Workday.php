@@ -44,7 +44,7 @@ class Workday extends Eloquent
 
     public function getDateAttribute(\MongoDate $date)
     {
-        return $date->toDateTime()->format('d/m/Y');
+        return $date->toDateTime();
     }
 
     public function getIn1Attribute($time)
@@ -89,16 +89,19 @@ class Workday extends Eloquent
         return Carbon::createFromFormat('H:i', $time);
     }
 
-    public static function monthBalance()
+    public static function monthBalance($month=null)
     {
+        if(empty($month))
+            $month = new Carbon('first day of this month');
+        else
+            $month = new Carbon('first day of '.$month);
+            
         $positiveMonthBalance = Carbon::createFromTime(0, 0, 0);
         $negativeMonthBalance = Carbon::createFromTime(0, 0, 0);
         $zeroBase = Carbon::createFromTime(0, 0, 0);
 
-        $workdays = parent::where(
-                'date', '>', new \DateTime('first day of this month')
-            )->get();
-
+        $workdays = self::daysOfMonth($month);
+        
         foreach($workdays as $workday) {
             $minutes = $zeroBase->diffInMinutes($workday->balance->value);
 
@@ -109,9 +112,25 @@ class Workday extends Eloquent
                 $negativeMonthBalance->addMinutes($minutes);
             }
         }
-
+        
         $monthMinutes = $positiveMonthBalance->diffInMinutes($negativeMonthBalance);
 
         return $zeroBase->addMinutes($monthMinutes);
+    }
+    
+    public static function groupedByMonthFormat($format='F')
+    {
+        return self::orderBy('date', 'DESC')
+            ->get()
+            ->groupBy(function ($workday) use ($format) {
+                return $workday->date->format($format);
+            });   
+    }
+    
+    public static function daysOfMonth($month) {
+        return self::where(function ($query) use ($month) {
+            $query->where('date', '>=', $month);
+            $query->where('date', '<=', $month->modify('last day of this month'));
+        })->get();
     }
 }

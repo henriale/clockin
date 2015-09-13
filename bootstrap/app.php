@@ -65,6 +65,7 @@ $app->singleton(
 
 /* Enable Facades use */
 $app->withFacades();
+class_alias('Barryvdh\Debugbar\Facade', 'Debugbar');
 
 /*
 |--------------------------------------------------------------------------
@@ -76,7 +77,9 @@ $app->withFacades();
 | totally optional, so you are not required to uncomment this line.
 |
 */
-
+if (env('APP_DEBUG')) {
+ $app->register(Barryvdh\Debugbar\LumenServiceProvider::class);
+}
 $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 $app->register(Jenssegers\Mongodb\MongodbServiceProvider::class);
@@ -100,5 +103,6 @@ $app->withEloquent();
 
 /* Load custom configuration */
 $app->configure('database');
+$app->configure('debugbar');
 
 return $app;

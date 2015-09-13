@@ -34,8 +34,10 @@ pre {
     line-height: 18.5714302062988px;
 }
 tr th {
-    font-weight: 500;
+    font-weight: bold;
     font-size: 15px;
+    color: #4a4a4a;
+    text-transform: uppercase;
     line-height: 20px;
 }
 tr td, tr th {
@@ -43,15 +45,26 @@ tr td, tr th {
 }
 tr td {
     color: #748090;
+    padding: 0.70rem;
 }
 
-tr td:nth-child(2n+2) {
+.days-table-header td {
+    font-size: 15px;
+    font-weight: 600;
+}
+.days-table tbody > tr td:nth-child(2n+2) {
     border-left: 1px solid #ECEEEF;
 }
-tr:last-child td {
+.days-table tbody > tr:last-child td, .month-title, .days-table-header {
+    border-bottom: 1px solid #ECEEEF;
+}
+.days-table tbody > tr:last-child td {
+    border-top: 1px solid #ECEEEF;
     border-left: none;
 }
-
+.out-table tbody > tr td {
+    border: none;
+}
 .positive-balance {
     color: #3C763D;
 }
@@ -67,4 +80,13 @@ tr:last-child td {
     text-align: center;
     font-weight: 100;
     font-family: 'Lato';
+}
+
+#fixed-register-form {
+    position: fixed;
+    bottom:0;
+    background: white;
+}
+#fixed-register-form table {
+    margin: 0;
 }

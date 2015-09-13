@@ -1,3 +1,5 @@
+<?php use App\Workday; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,102 +39,137 @@
         <div class="row">
             <div class="col-sm-12">
                 @if (session('message'))
-                    {{ dd($message) }}
                     <div class="alert alert-{!! $message['type'] !!} alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         {{ $message['text'] }}
                     </div>
                 @endif
-
-                <table class="table" id="timetable">
+                
+                <table class="table out-table">
+                @forelse($months as $monthName => $monthWorkdays)
                     <tr>
-                        <th>data</th>
-                        <th>entrada #1</th>
-                        <th>saída #1</th>
-                        <th>entrada #2</th>
-                        <th>saída #2</th>
-                        <th>entrada #3</th>
-                        <th>saída #3</th>
-                        <th>Saldo</th>
-                        <th>&nbsp;</th>
-                    </tr>
-                    @forelse($workdays as $workday)
-                    <tr item-id="{{ $workday->id }}">
-                        <td>{!! empty($workday->date) ? '<i class="oi oi-warning"></i>' : $workday->date !!}</td>
-                        <td>@formatTime($workday->in1)</td>
-                        <td>@formatTime($workday->out1)</td>
-                        <td>@formatTime($workday->in2)</td>
-                        <td>@formatTime($workday->out2)</td>
-                        <td>@formatTime($workday->in3)</td>
-                        <td>@formatTime($workday->out3)</td>
                         <td>
-                            @if($workday->balance->sign == '-')
-                            <span class="negative-balance">&#45;@formatTime($workday->balance->value)</span>
-                            @elseif($workday->balance->sign == '+')
-                            <span class="positive-balance">&#43;@formatTime($workday->balance->value)</span>
-                            @else
-                            <span class="">@formatTime($workday->balance)</span>
-                            @endif
-                        </td>
-                        <td>
-                            <button meta-route="{{ route('workday.destroy', ['id'=>$workday->_id]) }}" class="btn btn-danger-outline btn-sm delete-item"><span class="oi oi-trash"></span></button>
+                            <table class="table days-table">
+                                <tr class="month-title">
+                                    <th colspan="100" align="center">{{ $monthName }}</th>
+                                </tr>
+                                <tr class="days-table-header">
+                                    <td>data</td>
+                                    <td>entrada #1</td>
+                                    <td>saída #1</td>
+                                    <td>entrada #2</td>
+                                    <td>saída #2</td>
+                                    <td>entrada #3</td>
+                                    <td>saída #3</td>
+                                    <td>Saldo</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                @foreach($monthWorkdays as $workday)
+                                <tr item-id="{{ $workday->id }}">
+                                    <td>{!! empty($workday->date) ? '<i class="oi oi-warning"></i>' : $workday->date->format('d/m/Y') !!}</td>
+                                    <td>@formatTime($workday->in1)</td>
+                                    <td>@formatTime($workday->out1)</td>
+                                    <td>@formatTime($workday->in2)</td>
+                                    <td>@formatTime($workday->out2)</td>
+                                    <td>@formatTime($workday->in3)</td>
+                                    <td>@formatTime($workday->out3)</td>
+                                    <td>
+                                        @if($workday->balance->sign == '-')
+                                        <span class="negative-balance">&#45;@formatTime($workday->balance->value)</span>
+                                        @elseif($workday->balance->sign == '+')
+                                        <span class="positive-balance">&#43;@formatTime($workday->balance->value)</span>
+                                        @else
+                                        <span class="">@formatTime($workday->balance->value)</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <button meta-route="{{ route('workday.destroy', ['id'=>$workday->_id]) }}" class="btn btn-danger-outline btn-sm delete-item"><span class="oi oi-trash"></span></button>
+                                    </td>
+                                </tr>
+                                @endforeach
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>Total:</td>
+                                    <td>
+                                        @formatTime(Workday::monthBalance($monthName))
+                                    </td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                            </table>
                         </td>
                     </tr>
-                    @empty
-                        <tr>
-                            <td colspan="100" align="center">Não há nenhum registro. Insira as informações abaixo para cadastrar</td>
-                        </tr>
-                    @endforelse
-                    <form action="{{ route('workday.store') }}" method="post" id="workday-registration">
+                @empty
                     <tr>
-                        {{--<td><input type="text" name="date" id="date" class="form-control" maxlength="10" placeholder="Data"></td>--}}
-                        <td>
-                            <div class="form-group">
-                                <input type="text" name="date" id="date" class="form-control" maxlength="10" placeholder="Data">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input type="text" name="in1" id="in1" class="form-control" maxlength="5" placeholder="Entrada #1">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input type="text" name="out1" id="out1" class="form-control" maxlength="5" placeholder="Saída #1">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input type="text" name="in2" id="in2" class="form-control" maxlength="5" placeholder="Entrada #2">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input type="text" name="out2" id="out2" class="form-control" maxlength="5" placeholder="Saída #2">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input type="text" name="in3" id="in3" class="form-control" maxlength="5" placeholder="Entrada #3">
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <input type="text" name="out3" id="out3" class="form-control" maxlength="5" placeholder="Saída #3">
-                            </div>
-                        </td>
-                        {{--<td><a href="{{ route('workday.store') }}" class="btn btn-primary-outline" role="button">Salvar</a></td>--}}
-                        <td><button class="btn btn-primary-outline" type="submit">Salvar</button></td>
-                        <td></td>
+                        <td colspan="100" align="center">Não há nenhum registro. Insira as informações abaixo para cadastrar</td>
                     </tr>
-                    </form>
+                @endforelse
                 </table>
             </div><!-- .col-sm-12 -->
         </div><!-- .row -->
-        <div class="row">
-            <h2>Balanço mensal: {{ $month_balance }}</h2>
-        </div><!-- .row -->
     </div><!-- .container -->
+    
+    <br><br>
+    
+    <div id="fixed-register-form">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table">
+                    <tbody>
+                        <form action="{{ route('workday.store') }}" method="post" id="workday-registration">
+                            <tr>
+                                {{--<td><input type="text" name="date" id="date" class="form-control" maxlength="10" placeholder="Data"></td>--}}
+                                <td>
+                                    <div class="form-group">
+                                        <input type="text" name="date" id="date" class="form-control" maxlength="10" placeholder="Data">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="text" name="in1" id="in1" class="form-control" maxlength="5" placeholder="Entrada #1">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="text" name="out1" id="out1" class="form-control" maxlength="5" placeholder="Saída #1">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="text" name="in2" id="in2" class="form-control" maxlength="5" placeholder="Entrada #2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="text" name="out2" id="out2" class="form-control" maxlength="5" placeholder="Saída #2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="text" name="in3" id="in3" class="form-control" maxlength="5" placeholder="Entrada #3">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="text" name="out3" id="out3" class="form-control" maxlength="5" placeholder="Saída #3">
+                                    </div>
+                                </td>
+                                {{--<td><a href="{{ route('workday.store') }}" class="btn btn-primary-outline" role="button">Salvar</a></td>--}}
+                                <td><button class="btn btn-primary-outline" type="submit">Salvar</button></td>
+                                <td></td>
+                            </tr>
+                        </form>
+                    </tbody>
+                    </table>
+                </div><!-- .col-sm-12 -->
+            </div><!-- .row -->
+        </div><!-- .container-fluid -->
+    </div> <!-- #fixed-register-form -->
 </body>
 
 <footer class="scripts">
