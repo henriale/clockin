@@ -5,6 +5,7 @@ It calculates the time worked above or under the estimated time based on users' 
 
 ## Requirements
 - Composer
+- Bower
 - MongoDB
 - Git (seriously?)
 
@@ -14,6 +15,7 @@ It calculates the time worked above or under the estimated time based on users' 
 $ git clone https://github.com/Alexandreh/clockin.git
 $ cd clockin
 $ composer install
+$ bower install
 ```
 
 ##### Setup environment
