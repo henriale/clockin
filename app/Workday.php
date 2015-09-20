@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Jenssegers\Mongodb\Model as Eloquent;
+use Illuminate\Support\Facades\DB;
 
 class Workday extends Eloquent
 {
@@ -12,6 +13,54 @@ class Workday extends Eloquent
     protected $primaryKey = '_id';
 
     protected $dates = ['date'];
+
+    public static function monthBalance($month=null)
+    {
+        if(empty($month))
+            $month = 'this month';
+
+        $month = new Carbon("first day of {$month}");
+
+        $positiveMonthBalance = Carbon::createFromTime(0, 0, 0);
+        $negativeMonthBalance = Carbon::createFromTime(0, 0, 0);
+        $zeroBase = Carbon::createFromTime(0, 0, 0);
+
+        $workdays = self::daysInMonth($month);
+
+        foreach($workdays as $workday) {
+            $minutes = $zeroBase->diffInMinutes($workday->balance->value);
+
+            if($workday->balance->sign == '+') {
+                $positiveMonthBalance->addMinutes($minutes);
+            }
+            elseif($workday->balance->sign == '-') {
+                $negativeMonthBalance->addMinutes($minutes);
+            }
+        }
+
+        $monthMinutes = $positiveMonthBalance->diffInMinutes($negativeMonthBalance);
+
+        return $zeroBase->addMinutes($monthMinutes);
+    }
+
+    public static function groupedByMonth($format='F')
+    {
+        return self::orderBy('date', 'DESC')
+            ->get()
+            ->groupBy(function ($workday) use ($format) {
+                return $workday->date->format($format);
+            });
+    }
+
+    public static function daysInMonth($month) {
+        $beginningOfTheMonth = new \MongoDate($month->timestamp);
+        $endOfTheMonth = new \MongoDate($month->modify('last day of this month')->timestamp);
+
+        return self::where(function ($query) use ($beginningOfTheMonth, $endOfTheMonth) {
+            $query->where('date', '>=', $beginningOfTheMonth);
+            $query->where('date', '<=', $endOfTheMonth);
+        })->get();
+    }
 
     public function getBalanceAttribute($balance)
     {
@@ -87,50 +136,5 @@ class Workday extends Eloquent
         if(empty($time))
             return false;
         return Carbon::createFromFormat('H:i', $time);
-    }
-
-    public static function monthBalance($month=null)
-    {
-        if(empty($month))
-            $month = new Carbon('first day of this month');
-        else
-            $month = new Carbon('first day of '.$month);
-            
-        $positiveMonthBalance = Carbon::createFromTime(0, 0, 0);
-        $negativeMonthBalance = Carbon::createFromTime(0, 0, 0);
-        $zeroBase = Carbon::createFromTime(0, 0, 0);
-
-        $workdays = self::daysOfMonth($month);
-        
-        foreach($workdays as $workday) {
-            $minutes = $zeroBase->diffInMinutes($workday->balance->value);
-
-            if($workday->balance->sign == '+') {
-                $positiveMonthBalance->addMinutes($minutes);
-            }
-            elseif($workday->balance->sign == '-') {
-                $negativeMonthBalance->addMinutes($minutes);
-            }
-        }
-        
-        $monthMinutes = $positiveMonthBalance->diffInMinutes($negativeMonthBalance);
-
-        return $zeroBase->addMinutes($monthMinutes);
-    }
-    
-    public static function groupedByMonthFormat($format='F')
-    {
-        return self::orderBy('date', 'DESC')
-            ->get()
-            ->groupBy(function ($workday) use ($format) {
-                return $workday->date->format($format);
-            });   
-    }
-    
-    public static function daysOfMonth($month) {
-        return self::where(function ($query) use ($month) {
-            $query->where('date', '>=', $month);
-            $query->where('date', '<=', $month->modify('last day of this month'));
-        })->get();
     }
 }

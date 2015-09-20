@@ -9,7 +9,7 @@ class AppController extends Controller
     public function main()
     {
         return view('main', [
-            'months' => Workday::groupedByMonthFormat('F'),
+            'months' => Workday::groupedByMonth('F'),
         ]);
     }
 }

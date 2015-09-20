@@ -54,14 +54,14 @@
                                     <th colspan="100" align="center">{{ $monthName }}</th>
                                 </tr>
                                 <tr class="days-table-header">
-                                    <td>data</td>
-                                    <td>entrada #1</td>
-                                    <td>saída #1</td>
-                                    <td>entrada #2</td>
-                                    <td>saída #2</td>
-                                    <td>entrada #3</td>
-                                    <td>saída #3</td>
-                                    <td>Saldo</td>
+                                    <td>date</td>
+                                    <td>arrival #1</td>
+                                    <td>leaving #1</td>
+                                    <td>arrival #2</td>
+                                    <td>leaving #2</td>
+                                    <td>arrival #3</td>
+                                    <td>leaving #3</td>
+                                    <td>balance</td>
                                     <td>&nbsp;</td>
                                 </tr>
                                 @foreach($monthWorkdays as $workday)
@@ -83,7 +83,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <button meta-route="{{ route('workday.destroy', ['id'=>$workday->_id]) }}" class="btn btn-danger-outline btn-sm delete-item"><span class="oi oi-trash"></span></button>
+                                        <button title="delete item" meta-route="{{ route('workday.destroy', ['id'=>$workday->_id]) }}" class="btn btn-danger-outline btn-sm delete-item"><span class="oi oi-trash"></span></button>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -105,9 +105,27 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="100" align="center">Não há nenhum registro. Insira as informações abaixo para cadastrar</td>
+                        <td>
+                            <table class="table days-table">
+                                <tr class="days-table-header">
+                                    <td>date</td>
+                                    <td>arrival #1</td>
+                                    <td>leaving #1</td>
+                                    <td>arrival #2</td>
+                                    <td>leaving #2</td>
+                                    <td>arrival #3</td>
+                                    <td>leaving #3</td>
+                                    <td>balance</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="100" align="center">No data has been registered yet. You can start now by inserting them right below.</td>
+                                </tr>
+                            </table>
+                        </td>
+
                     </tr>
-                @endforelse
+                    @endforelse
                 </table>
             </div><!-- .col-sm-12 -->
         </div><!-- .row -->
@@ -125,42 +143,44 @@
                             <tr>
                                 {{--<td><input type="text" name="date" id="date" class="form-control" maxlength="10" placeholder="Data"></td>--}}
                                 <td>
+                                    <img src="http://placehold.it/40x40" alt="" class="img-circle">
+                                </td>
+                                <td>
                                     <div class="form-group">
                                         <input type="text" name="date" id="date" class="form-control" maxlength="10" placeholder="Data">
                                     </div>
                                 </td>
                                 <td>
                                     <div class="form-group">
-                                        <input type="text" name="in1" id="in1" class="form-control" maxlength="5" placeholder="Entrada #1">
+                                        <input type="text" name="in1" id="in1" class="form-control" maxlength="5" placeholder="Arrival #1">
                                     </div>
                                 </td>
                                 <td>
                                     <div class="form-group">
-                                        <input type="text" name="out1" id="out1" class="form-control" maxlength="5" placeholder="Saída #1">
+                                        <input type="text" name="out1" id="out1" class="form-control" maxlength="5" placeholder="Leaving #1">
                                     </div>
                                 </td>
                                 <td>
                                     <div class="form-group">
-                                        <input type="text" name="in2" id="in2" class="form-control" maxlength="5" placeholder="Entrada #2">
+                                        <input type="text" name="in2" id="in2" class="form-control" maxlength="5" placeholder="Arrival #2">
                                     </div>
                                 </td>
                                 <td>
                                     <div class="form-group">
-                                        <input type="text" name="out2" id="out2" class="form-control" maxlength="5" placeholder="Saída #2">
+                                        <input type="text" name="out2" id="out2" class="form-control" maxlength="5" placeholder="Leaving #2">
                                     </div>
                                 </td>
                                 <td>
                                     <div class="form-group">
-                                        <input type="text" name="in3" id="in3" class="form-control" maxlength="5" placeholder="Entrada #3">
+                                        <input type="text" name="in3" id="in3" class="form-control" maxlength="5" placeholder="Arrival #3">
                                     </div>
                                 </td>
                                 <td>
                                     <div class="form-group">
-                                        <input type="text" name="out3" id="out3" class="form-control" maxlength="5" placeholder="Saída #3">
+                                        <input type="text" name="out3" id="out3" class="form-control" maxlength="5" placeholder="Leaving #3">
                                     </div>
                                 </td>
-                                {{--<td><a href="{{ route('workday.store') }}" class="btn btn-primary-outline" role="button">Salvar</a></td>--}}
-                                <td><button class="btn btn-primary-outline" type="submit">Salvar</button></td>
+                                <td><button class="btn btn-primary-outline" type="submit">Save</button></td>
                                 <td></td>
                             </tr>
                         </form>

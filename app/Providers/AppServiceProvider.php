@@ -14,7 +14,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
         Blade::directive('formatTime', function($expression) {
             return "<?php
                 if(empty{$expression})
