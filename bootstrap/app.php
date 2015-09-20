@@ -105,4 +105,6 @@ $app->withEloquent();
 $app->configure('database');
 $app->configure('debugbar');
 
+DB::connection('mongodb')->enableQueryLog();
+
 return $app;
