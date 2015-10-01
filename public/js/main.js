@@ -59,6 +59,7 @@ var page = {
         return true;
     },
     // properties
+    daytime: 480,
     date: $('input[name="date"]'),
     in1: $('input[name="in1"]'),
     out1: $('input[name="out1"]'),
@@ -73,7 +74,7 @@ var page = {
         // setup date regex for dd/mm/yyyy
         var dateRegex = /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
         is.setRegexp(dateRegex, 'dateString');
-        // setup date regex for dd/mm/yyyy
+        // setup date regex for H:i
         var timeRegex = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
         is.setRegexp(timeRegex, 'timeString');
 
@@ -107,7 +108,7 @@ var page = {
         page.date.datepicker();
         page.date.mask('00/00/0000');
 
-        // times
+        // set a mask to the times
         page.in1.mask('00:00', timeOptions);
         page.out1.mask('00:00', timeOptions);
         page.in2.mask('00:00', timeOptions);
@@ -136,13 +137,74 @@ var page = {
                 });
             }
         });
+        
+        var refreshTime = setInterval(page.refreshTime, 2000);
     },
 
     resetInputAlerts: function () {
         page.timetable.find('.form-group').removeClass('has-success');
         page.timetable.find('.form-group').removeClass('has-warning');
         page.timetable.find('.form-group').removeClass('has-error');
+    },
+    
+    refreshTime: function () {
+        var in1, out1, in2, out2, in3, out3;
+        
+        if (is.timeString(page.in1.val()))
+            in1 = moment().set({
+                'hour': page.in1.val().split(':')[0],
+                'minute': page.in1.val().split(':')[1]
+            });
+        if (is.timeString(page.out1.val()))
+            out1 = moment().set({
+                'hour': page.out1.val().split(':')[0],
+                'minute': page.out1.val().split(':')[1]
+            });
+        
+        if (is.timeString(page.in2.val()))
+            in2 = moment().set({
+                'hour': page.in2.val().split(':')[0],
+                'minute': page.in2.val().split(':')[1]
+            });
+        if (is.timeString(page.out2.val()))
+            out2 = moment().set({
+                'hour': page.out2.val().split(':')[0],
+                'minute': page.out2.val().split(':')[1]
+            });
+        
+        if (is.timeString(page.in3.val()))
+            in3 = moment().set({
+                'hour': page.in3.val().split(':')[0],
+                'minute': page.in3.val().split(':')[1]
+            });
+        if (is.timeString(page.out3.val()))
+            out3 = moment().set({
+                'hour': page.out3.val().split(':')[0],
+                'minute': page.out3.val().split(':')[1]
+            });
+        
+        var firstPeriod = page.calcPeriod(in1, out1);
+        var secondPeriod = page.calcPeriod(in2, out2);
+        var thirdPeriod = page.calcPeriod(in3, out3);
+        
+        var total = firstPeriod + secondPeriod + thirdPeriod;
+        
+        var workedTime = new Date();
+        workedTime.setHours(0);
+        workedTime.setMinutes(total);
+        
+        console.log(total);
+        $('#current-worktime').html(moment(workedTime).format('H:m'));
+    },
+    
+    calcPeriod: function (clockin, clockout) {
+        if ( !!clockin && !!clockout)
+            return Math.abs(clockin.diff(clockout, 'minutes'));
+        else if ( !!clockin && !clockout)
+            return Math.abs(clockin.diff(moment(), 'minutes'));
+        
+        return null;
     }
 };
 
-$(document).ready(page.init());
+$(document).ready(page.init()); 

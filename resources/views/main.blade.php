@@ -180,8 +180,10 @@
                                         <input type="text" name="out3" id="out3" class="form-control" maxlength="5" placeholder="Leaving #3">
                                     </div>
                                 </td>
+                                <td>
+                                    <span id="current-worktime">00:00</span>
+                                </td>
                                 <td><button class="btn btn-primary-outline" type="submit">Save</button></td>
-                                <td></td>
                             </tr>
                         </form>
                     </tbody>
@@ -205,6 +207,8 @@
     <script type="text/javascript" src="{{ url('/bower_components/jquery-ui/ui/i18n/datepicker-pt-BR.js') }}"></script>
     <!-- jQuery Mask Plugin 1.13.4 -->
     <script type="text/javascript" src="{{ url('/bower_components/jquery-mask-plugin/dist/jquery.mask.min.js') }}"></script>
+    <!-- Moment.js 2.10.6 -->
+    <script type="text/javascript" src="{{ url('/bower_components/moment/min/moment.min.js') }}"></script>
     <!-- Page Scripts -->
     <script type="text/javascript" src="{{ url('/js/main.js') }}"></script>
 </footer>

@@ -15,9 +15,10 @@
   ],
   "dependencies": {
     "bootstrap": "4",
-    "jquery-mask-plugin": "~1.13.4",
     "is_js": "isjs#~0.7.4",
+    "jquery-mask-plugin": "~1.13.4",
     "jquery-ui": "~1.11.4",
+    "moment": "~2.10.6",
     "normalize-css": "normalize.css#~3.0.3",
     "open-iconic": "~1.1.1"
   }
