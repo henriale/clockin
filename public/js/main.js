@@ -85,7 +85,7 @@ var page = {
         // TODO: change this method
         var today = new Date($.now());
         var date  = (today.getDate() < 10 ? '0' : '') + today.getDate();
-        var month = (today.getMonth() < 10 ? '0' : '') + (today.getMonth()+1);
+        var month = (today.getMonth()+1 < 10 ? '0' : '') + (today.getMonth()+1);
 
         page.date.val(
             date+'/'+month+'/'+today.getFullYear()
@@ -194,7 +194,7 @@ var page = {
         workedTime.setMinutes(total);
         
         console.log(total);
-        $('#current-worktime').html(moment(workedTime).format('H:m'));
+        $('#current-worktime').html(moment(workedTime).format('HH:mm'));
     },
     
     calcPeriod: function (clockin, clockout) {
