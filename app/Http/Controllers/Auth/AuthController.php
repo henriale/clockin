@@ -10,6 +10,9 @@ class AuthController extends \App\Http\Controllers\Controller
     
     public function login()
     {
+        if (Auth::check() === true)
+            return redirect('/');
+
         return view('login');
     }
 
@@ -20,15 +23,16 @@ class AuthController extends \App\Http\Controllers\Controller
     
     public function authenticate()
     {
-        $attempt = Auth::attempt([
+        $credentials = [
             'email' => Request::input('email'),
             'password' => Request::input('password')
-        ]);
-        
-        if( ! $attempt)
+        ];
+
+        if( ! Auth::attempt($credentials, true))
             return redirect('login');
-            
-        return redirect()->intended('/');
+
+        Auth::login(Auth::user());
+        return redirect('/');
         
     }
     
