@@ -181,7 +181,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <span id="current-worktime">00:00</span>
+                                    <div id="current-worktime">00:00</div>
                                 </td>
                                 <td><button class="btn btn-primary-outline" type="submit">Save</button></td>
                             </tr>

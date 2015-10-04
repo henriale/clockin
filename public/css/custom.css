@@ -90,3 +90,8 @@ tr td {
 #fixed-register-form table {
     margin: 0;
 }
+
+#current-worktime {
+    font-size: 22px;
+    margin: 10px 0;
+}
