@@ -18,8 +18,19 @@ class User extends Model implements AuthenticatableContract,
     protected $fillable = [
         'name',
         'username',
+        'email',
         'password'
     ];
     
     protected $hidden = ['password'];
+
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = bcrypt($password);
+    }
+
+    public function setUsernameAttribute($username)
+    {
+        $this->attributes['username'] = strtolower($username);
+    }
 }

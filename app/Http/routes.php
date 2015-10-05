@@ -14,6 +14,7 @@ $app->get('/login', ['uses'=>'Auth\AuthController@login']);
 $app->post('/login', ['uses'=>'Auth\AuthController@authenticate']);
 $app->get('/signup', ['uses'=>'Auth\AuthController@signup']);
 $app->post('/signup', ['uses'=>'Auth\AuthController@register']);
+$app->get('/logout', ['uses'=>'Auth\AuthController@logout']);
 
 $app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers'], function ($app) {
     $app->get('/', ['uses'=>'AppController@main']);

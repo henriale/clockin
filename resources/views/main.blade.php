@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <title>Main view</title>
+    <title>ClockIn - track your working time</title>
 
     <!-- Raleway font -->
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway" />
@@ -143,7 +143,19 @@
                             <tr>
                                 {{--<td><input type="text" name="date" id="date" class="form-control" maxlength="10" placeholder="Data"></td>--}}
                                 <td>
-                                    <img src="http://placehold.it/40x40" alt="" class="img-circle">
+                                    <div class="profile">
+                                        <ul class="nav navbar-nav">
+                                            <li class="dropdown">
+                                                <a href="#" class="dropdown-toggle dropup-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                                    <img src="images/profile/batman.jpg" alt="" class="img-circle img-responsive">
+                                                </a>
+                                                <ul class="dropdown-menu dropup-menu">
+                                                    <li class="dropdown-item"><a href="{{ url('/logout') }}">{{--<span class="oi oi-account-logout"></span>--}}&nbsp;&nbsp;Logout</a></li>
+                                                    {{--<li class="dropdown-item"><a href="#">--}}{{--<span class="oi oi-pencil"></span>--}}{{--&nbsp;&nbsp;Edit profile</a></li>--}}
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </td>
                                 <td>
                                     <div class="form-group">

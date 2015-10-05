@@ -95,3 +95,22 @@ tr td {
     font-size: 22px;
     margin: 10px 0;
 }
+
+/* dropdown style */
+.dropup-menu {
+top: auto;
+bottom: 125% !important;
+}
+.dropup-toggle img {
+    max-width: 40px;
+    max-height: 40px;
+}
+.dropup-toggle:after {
+display: block;
+content: normal;
+}
+/* fix color */
+.dropdown-item a {
+    color: #373a3c!important;
+    text-decoration: none;
+}

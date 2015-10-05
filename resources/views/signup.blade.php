@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <title>Log in - ClockIn</title>
+    <title>Sign in - ClockIn</title>
 
     <!-- Raleway font -->
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway" />
@@ -39,16 +39,17 @@
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <form class="form-signin" method="post" action="{{ url('login') }}">
+                <form class="form-signin" method="post" action="{{ url('signup') }}">
                     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                     
                     <label for="inputEmail" class="sr-only">Email address</label>
                     <input type="email" name="email" class="form-control" placeholder="Email address" required="" autofocus="">
                     <label for="inputPassword" class="sr-only">Password</label>
                     <input type="password" name="password" class="form-control" placeholder="Password" required="">
+                    <label for="inputRepeatPassword" class="sr-only">Repeat password</label>
+                    <input type="password" name="repeat-password" class="form-control" placeholder="Repeat password" required="">
                     
-                    <button class="btn btn-lg btn-primary-outline btn-block" type="submit">Login</button>
-                    <a class="btn btn-lg btn-secondary-outline btn-block" href="{{ url('/signup') }}" role="button">Sign Up</a>
+                    <button class="btn btn-lg btn-primary-outline btn-block" type="submit">Sign up!</button>
                 </form>
             </div><!-- .col-sm-12 -->
         </div><!-- .row -->
