@@ -3,6 +3,7 @@
 namespace App;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Jenssegers\Mongodb\Model as Eloquent;
 use Illuminate\Support\Facades\DB;
 
@@ -46,6 +47,7 @@ class Workday extends Eloquent
     public static function groupedByMonth($format='F')
     {
         return self::orderBy('date', 'DESC')
+            ->where('user_id', '=', Auth::user()->id)
             ->get()
             ->groupBy(function ($workday) use ($format) {
                 return $workday->date->format($format);
@@ -59,7 +61,7 @@ class Workday extends Eloquent
         return self::where(function ($query) use ($beginningOfTheMonth, $endOfTheMonth) {
             $query->where('date', '>=', $beginningOfTheMonth);
             $query->where('date', '<=', $endOfTheMonth);
-        })->get();
+        })->where('user_id', '=', Auth::user()->id)->get();
     }
 
     public function getBalanceAttribute($balance)

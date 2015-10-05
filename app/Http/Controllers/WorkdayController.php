@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Workday;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Auth;
 
 class WorkdayController extends Controller
 {
@@ -18,6 +19,7 @@ class WorkdayController extends Controller
         $workday->out2 = Request::input('out2');
         $workday->in3 = Request::input('in3');
         $workday->out3 = Request::input('out3');
+        $workday->user_id = Auth::user()->id;
         $workday->balance = -480;
         $workday->save();
 
