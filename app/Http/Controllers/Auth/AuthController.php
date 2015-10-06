@@ -45,10 +45,16 @@ class AuthController extends \App\Http\Controllers\Controller
         
     }
     
-    public function register()
+    public function register(\Illuminate\Http\Request $request)
     {
         // TODO: Validation
         // TODO: get username properly
+        $this->validate($request, [
+            'email' => 'required|email|unique:users,email',
+            'password' => 'same:repeat-password',
+            'repeat-password' => 'required',
+        ]);
+
         $credentials = [
             'username' => str_random(10),
             'email' => Request::input('email'),
