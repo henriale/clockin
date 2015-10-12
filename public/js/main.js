@@ -120,6 +120,8 @@ var page = {
             if( ! page.formValidation()) {
                 event.preventDefault();
             }
+
+            $.removeCookie("current-day");
         });
 
         // delete workday
@@ -138,7 +140,36 @@ var page = {
             }
         });
         
-        var refreshTime = setInterval(page.refreshTime, 2000);
+        var refreshTime = setInterval(page.refreshTime, 1200);
+
+        if (undefined !== $.cookie("current-day")) {
+            var trackingDayCookie = JSON.parse($.cookie("current-day"));
+
+            page.date.val(trackingDayCookie.date);
+            page.in1.val(trackingDayCookie.in1);
+            page.out1.val(trackingDayCookie.out1);
+            page.in2.val(trackingDayCookie.in2);
+            page.out2.val(trackingDayCookie.out2);
+            page.in3.val(trackingDayCookie.in3);
+            page.out3.val(trackingDayCookie.out3);
+        }
+
+        page.registrationForm.find('input').on({
+            focusout: function (event) {
+                var formData = {
+                    date: page.date.val(),
+                    in1: page.in1.val(),
+                    out1: page.out1.val(),
+                    in2: page.in2.val(),
+                    out2: page.out2.val(),
+                    in3: page.in3.val(),
+                    out3: page.out3.val()
+                };
+
+                formData = JSON.stringify(formData);
+                $.cookie("current-day", formData);
+            }
+        });
     },
 
     resetInputAlerts: function () {
@@ -192,8 +223,7 @@ var page = {
         var workedTime = new Date();
         workedTime.setHours(0);
         workedTime.setMinutes(total);
-        
-        console.log(total);
+
         $('#current-worktime').html(moment(workedTime).format('HH:mm'));
     },
     
