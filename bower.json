@@ -20,6 +20,7 @@
     "jquery-ui": "~1.11.4",
     "moment": "~2.10.6",
     "normalize-css": "normalize.css#~3.0.3",
-    "open-iconic": "~1.1.1"
+    "open-iconic": "~1.1.1",
+    "jquery.cookie": "jquery-cookie#~1.4.1"
   }
 }

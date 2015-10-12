@@ -137,9 +137,9 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
-                    <table class="table">
-                    <tbody>
-                        <form action="{{ route('workday.store') }}" method="post" id="workday-registration">
+                    <form action="{{ route('workday.store') }}" method="post" id="workday-registration">
+                        <table class="table">
+                        <tbody>
                             <tr>
                                 {{--<td><input type="text" name="date" id="date" class="form-control" maxlength="10" placeholder="Data"></td>--}}
                                 <td>
@@ -197,9 +197,9 @@
                                 </td>
                                 <td><button class="btn btn-primary-outline" type="submit">Save</button></td>
                             </tr>
-                        </form>
-                    </tbody>
-                    </table>
+                        </tbody>
+                        </table>
+                    </form>
                 </div><!-- .col-sm-12 -->
             </div><!-- .row -->
         </div><!-- .container-fluid -->
@@ -219,6 +219,8 @@
     <script type="text/javascript" src="{{ url('/bower_components/jquery-ui/ui/i18n/datepicker-pt-BR.js') }}"></script>
     <!-- jQuery Mask Plugin 1.13.4 -->
     <script type="text/javascript" src="{{ url('/bower_components/jquery-mask-plugin/dist/jquery.mask.min.js') }}"></script>
+    <!-- jQuery Cookie Plugin 1.4.1 -->
+    <script type="text/javascript" src="{{ url('/bower_components/jquery.cookie/jquery.cookie.js') }}"></script>
     <!-- Moment.js 2.10.6 -->
     <script type="text/javascript" src="{{ url('/bower_components/moment/min/moment.min.js') }}"></script>
     <!-- Page Scripts -->
