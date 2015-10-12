@@ -20,3 +20,7 @@ _ide_helper_models.php
 .phpstorm.meta.php
 
 Vagrantfile
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
