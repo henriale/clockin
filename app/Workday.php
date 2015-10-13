@@ -4,18 +4,26 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Jenssegers\Mongodb\Model as Eloquent;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
 
-class Workday extends Eloquent
+class Workday extends Model
 {
-    protected $connection = 'mongodb';
-    protected $collection = 'workday';
-    protected $primaryKey = '_id';
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['created_at', 'updated_at', 'date'];
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        //'date' => 'datetime',
+    ];
 
-    protected $dates = ['date'];
-
-    public static function monthBalance($month=null)
+    public static function monthBalance($month = null)
     {
         if(empty($month))
             $month = 'this month';
@@ -47,6 +55,7 @@ class Workday extends Eloquent
     public static function groupedByMonth($format='F')
     {
         return self::orderBy('date', 'DESC')
+            // TODO: use joins on it
             ->where('user_id', '=', Auth::user()->id)
             ->get()
             ->groupBy(function ($workday) use ($format) {
@@ -55,25 +64,47 @@ class Workday extends Eloquent
     }
 
     public static function daysInMonth($month) {
-        $beginningOfTheMonth = new \MongoDate($month->timestamp);
-        $endOfTheMonth = new \MongoDate($month->modify('last day of this month')->timestamp);
+        // TODO: format time (if needed)
+        $beginningOfTheMonth = $month;
+        $endOfTheMonth = $month->modify('last day of this month');
 
         return self::where(function ($query) use ($beginningOfTheMonth, $endOfTheMonth) {
             $query->where('date', '>=', $beginningOfTheMonth);
             $query->where('date', '<=', $endOfTheMonth);
-        })->where('user_id', '=', Auth::user()->id)->get();
+            //TODO: change it for inner join
+        })
+            ->where('user_id', '=', Auth::user()->id)
+            ->get();
+    }
+
+    protected static function isTimeSet($time)
+    {
+        return (bool) ((int) (new Carbon($time))->format('His'));
     }
 
     public function getBalanceAttribute($balance)
     {
-        if( ! empty($this->in1) && ! empty($this->out1))
-            $balance += $this->in1->diffInMinutes($this->out1);
+        // TODO: improve this method
+        $balance -= $this->workload
+            ->diffInMinutes(Carbon::createFromTime(0, 0, 0));
 
-        if( ! empty($this->in2) && ! empty($this->out2))
-            $balance += $this->in2->diffInMinutes($this->out2);
+        if( true === (bool) $this->arrival1
+            && true === (bool) $this->leaving1
+        ) {
+            $balance += $this->arrival1->diffInMinutes($this->leaving1);
+        }
 
-        if( ! empty($this->in3) && ! empty($this->out3))
-            $balance += $this->in3->diffInMinutes($this->out3);
+        if( true === (bool) $this->arrival2
+            && true === (bool) $this->leaving2
+        ) {
+            $balance += $this->arrival2->diffInMinutes($this->leaving2);
+        }
+
+        if( true === (bool) $this->arrival3
+            && true === (bool) $this->leaving3
+        ) {
+            $balance += $this->arrival3->diffInMinutes($this->leaving3);
+        }
 
         $sign = ($balance < 0) ? '-' : '+';
         $sign = ($balance == 0) ? null : $sign;
@@ -90,53 +121,64 @@ class Workday extends Eloquent
     public function setDateAttribute($date)
     {
         $date = Carbon::createFromFormat('d/m/Y', $date);
-        $this->attributes['date'] = new \MongoDate($date->getTimestamp());
+        $this->attributes['date'] = $date;
     }
 
-    public function getDateAttribute(\MongoDate $date)
+    public function getDateAttribute($date)
     {
-        return $date->toDateTime();
+        return Carbon::createFromFormat('Y-m-d', $date);
     }
 
-    public function getIn1Attribute($time)
+    public function getArrival1Attribute($time)
     {
-        if(empty($time))
+        if(false === self::isTimeSet($time))
             return false;
-        return Carbon::createFromFormat('H:i', $time);
+
+        return Carbon::createFromFormat('H:i:s', $time);
     }
 
-    public function getOut1Attribute($time)
+    public function getLeaving1Attribute($time)
     {
-        if(empty($time))
+        if(false === self::isTimeSet($time))
             return false;
-        return Carbon::createFromFormat('H:i', $time);
+
+        return Carbon::createFromFormat('H:i:s', $time);
     }
 
-    public function getIn2Attribute($time)
+    public function getArrival2Attribute($time)
     {
-        if(empty($time))
+        if(false === self::isTimeSet($time))
             return false;
-        return Carbon::createFromFormat('H:i', $time);
+
+        return Carbon::createFromFormat('H:i:s', $time);
     }
 
-    public function getOut2Attribute($time)
+    public function getLeaving2Attribute($time)
     {
-        if(empty($time))
+        if(false === self::isTimeSet($time))
             return false;
-        return Carbon::createFromFormat('H:i', $time);
+
+        return Carbon::createFromFormat('H:i:s', $time);
     }
 
-    public function getIn3Attribute($time)
+    public function getArrival3Attribute($time)
     {
-        if(empty($time))
+        if(false === self::isTimeSet($time))
             return false;
-        return Carbon::createFromFormat('H:i', $time);
+
+        return Carbon::createFromFormat('H:i:s', $time);
     }
 
-    public function getOut3Attribute($time)
+    public function getLeaving3Attribute($time)
     {
-        if(empty($time))
+        if(false === self::isTimeSet($time))
             return false;
-        return Carbon::createFromFormat('H:i', $time);
+
+        return Carbon::createFromFormat('H:i:s', $time);
+    }
+
+    public function getWorkloadAttribute($time)
+    {
+        return Carbon::createFromFormat('H:i:s', $time);
     }
 }

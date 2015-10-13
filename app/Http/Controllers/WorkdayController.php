@@ -8,19 +8,17 @@ use Illuminate\Support\Facades\Auth;
 
 class WorkdayController extends Controller
 {
-    
     public function store()
     {
         $workday = new Workday();
         $workday->date = Request::input('date');
-        $workday->in1 = Request::input('in1');
-        $workday->out1 = Request::input('out1');
-        $workday->in2 = Request::input('in2');
-        $workday->out2 = Request::input('out2');
-        $workday->in3 = Request::input('in3');
-        $workday->out3 = Request::input('out3');
+        $workday->arrival1 = Request::input('in1');
+        $workday->leaving1 = Request::input('out1');
+        $workday->arrival2 = Request::input('in2');
+        $workday->leaving2 = Request::input('out2');
+        $workday->arrival3 = Request::input('in3');
+        $workday->leaving3 = Request::input('out3');
         $workday->user_id = Auth::user()->id;
-        $workday->balance = -480;
         $workday->save();
 
         return redirect()->back()->with([

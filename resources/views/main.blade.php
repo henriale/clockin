@@ -39,7 +39,7 @@
         <div class="row">
             <div class="col-sm-12">
                 @if (session('message'))
-                    <div class="alert alert-{!! $message['type'] !!} alert-dismissible" role="alert">
+                    <div class="alert alert-{{ $message['type'] }} alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         {{ $message['text'] }}
                     </div>
@@ -65,14 +65,14 @@
                                     <td>&nbsp;</td>
                                 </tr>
                                 @foreach($monthWorkdays as $workday)
-                                <tr item-id="{{ $workday->id }}">
+                                <tr item-id="{!! $workday->id !!}">
                                     <td>{!! empty($workday->date) ? '<i class="oi oi-warning"></i>' : $workday->date->format('d/m/Y') !!}</td>
-                                    <td>@formatTime($workday->in1)</td>
-                                    <td>@formatTime($workday->out1)</td>
-                                    <td>@formatTime($workday->in2)</td>
-                                    <td>@formatTime($workday->out2)</td>
-                                    <td>@formatTime($workday->in3)</td>
-                                    <td>@formatTime($workday->out3)</td>
+                                    <td>@formatTime($workday->arrival1)</td>
+                                    <td>@formatTime($workday->leaving1)</td>
+                                    <td>@formatTime($workday->arrival2)</td>
+                                    <td>@formatTime($workday->leaving2)</td>
+                                    <td>@formatTime($workday->arrival3)</td>
+                                    <td>@formatTime($workday->leaving3)</td>
                                     <td>
                                         @if($workday->balance->sign == '-')
                                         <span class="negative-balance">&#45;@formatTime($workday->balance->value)</span>
@@ -83,7 +83,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <button title="delete item" meta-route="{{ route('workday.destroy', ['id'=>$workday->_id]) }}" class="btn btn-danger-outline btn-sm delete-item"><span class="oi oi-trash"></span></button>
+                                        <button title="delete item" meta-route="{!! route('workday.destroy', ['id'=>$workday->id]) !!}" class="btn btn-danger-outline btn-sm delete-item"><span class="oi oi-trash"></span></button>
                                     </td>
                                 </tr>
                                 @endforeach
