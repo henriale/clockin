@@ -1,5 +1,3 @@
-<?php use App\Workday; ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -96,7 +94,7 @@
                                     <td>&nbsp;</td>
                                     <td>Total:</td>
                                     <td>
-                                        @formatTime(Workday::monthBalance($monthName))
+                                        @formatTime($monthlyBalances[$monthName])
                                     </td>
                                     <td>&nbsp;</td>
                                 </tr>
