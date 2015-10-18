@@ -23,6 +23,11 @@ class Workday extends Model
         //'date' => 'datetime',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
     public static function monthBalance($month = null)
     {
         if(empty($month))
@@ -52,7 +57,7 @@ class Workday extends Model
         return $zeroBase->addMinutes($monthMinutes);
     }
 
-    public static function groupedByMonth($format='F')
+    public static function groupedByMonth($format = 'F')
     {
         return self::orderBy('date', 'DESC')
             // TODO: use joins on it
@@ -63,14 +68,10 @@ class Workday extends Model
             });
     }
 
-    public static function daysInMonth($month) {
-        // TODO: format time (if needed)
-        $beginningOfTheMonth = $month;
-        $endOfTheMonth = $month->modify('last day of this month');
-
-        return self::where(function ($query) use ($beginningOfTheMonth, $endOfTheMonth) {
-            $query->where('date', '>=', $beginningOfTheMonth);
-            $query->where('date', '<=', $endOfTheMonth);
+    public static function daysInMonth(Carbon $month) {
+        return self::where(function ($query) use ($month) {
+            $query->where('date', '>=', clone $month);
+            $query->where('date', '<=', $month->modify('last day of this month'));
             //TODO: change it for inner join
         })
             ->where('user_id', '=', Auth::user()->id)

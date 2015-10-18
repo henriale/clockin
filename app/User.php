@@ -24,6 +24,11 @@ class User extends Model implements AuthenticatableContract,
     
     protected $hidden = ['password'];
 
+    public function workdays()
+    {
+        return $this->hasMany('App\Workday');
+    }
+
     public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = bcrypt($password);
