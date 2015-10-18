@@ -59,7 +59,6 @@ var page = {
         return true;
     },
     // properties
-    daytime: 480,
     date: $('input[name="date"]'),
     in1: $('input[name="in1"]'),
     out1: $('input[name="out1"]'),
@@ -78,9 +77,6 @@ var page = {
         var timeRegex = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
         is.setRegexp(timeRegex, 'timeString');
 
-        // focused input on start
-        page.in1.focus();
-
         // current day as default value to date
         // TODO: change this method
         var today = new Date($.now());
@@ -97,10 +93,8 @@ var page = {
 
         var timeOptions = {
             clearIfNotMatch: true,
-            onComplete: function (time, event, currentField) {
-                $(currentField).parent().parent()
-                    .next()
-                    .find('input').focus();
+            onComplete: function (time, event, currentInput) {
+                page.focusNextInput($(currentInput));
             },
         };
 
@@ -170,6 +164,9 @@ var page = {
                 $.cookie("current-day", formData);
             }
         });
+
+        // focus input on start
+        page.focusNextInput(page.date);
     },
 
     resetInputAlerts: function () {
@@ -177,10 +174,10 @@ var page = {
         page.timetable.find('.form-group').removeClass('has-warning');
         page.timetable.find('.form-group').removeClass('has-error');
     },
-    
+
     refreshTime: function () {
         var in1, out1, in2, out2, in3, out3;
-        
+
         if (is.timeString(page.in1.val()))
             in1 = moment().set({
                 'hour': page.in1.val().split(':')[0],
@@ -191,7 +188,7 @@ var page = {
                 'hour': page.out1.val().split(':')[0],
                 'minute': page.out1.val().split(':')[1]
             });
-        
+
         if (is.timeString(page.in2.val()))
             in2 = moment().set({
                 'hour': page.in2.val().split(':')[0],
@@ -202,7 +199,7 @@ var page = {
                 'hour': page.out2.val().split(':')[0],
                 'minute': page.out2.val().split(':')[1]
             });
-        
+
         if (is.timeString(page.in3.val()))
             in3 = moment().set({
                 'hour': page.in3.val().split(':')[0],
@@ -213,28 +210,43 @@ var page = {
                 'hour': page.out3.val().split(':')[0],
                 'minute': page.out3.val().split(':')[1]
             });
-        
-        var firstPeriod = page.calcPeriod(in1, out1);
-        var secondPeriod = page.calcPeriod(in2, out2);
-        var thirdPeriod = page.calcPeriod(in3, out3);
-        
-        var total = firstPeriod + secondPeriod + thirdPeriod;
-        
-        var workedTime = new Date();
-        workedTime.setHours(0);
-        workedTime.setMinutes(total);
+
+        var firstPeriod = page.calcInterval(in1, out1);
+        var secondPeriod = page.calcInterval(in2, out2);
+        var thirdPeriod = page.calcInterval(in3, out3);
+
+        var workedTime = new Date(0, 0, 0, 0, 0, 0);
+        workedTime.setMinutes(firstPeriod + secondPeriod + thirdPeriod);
 
         $('#current-worktime').html(moment(workedTime).format('HH:mm'));
     },
-    
-    calcPeriod: function (clockin, clockout) {
+
+    calcInterval: function (clockin, clockout) {
         if ( !!clockin && !!clockout)
             return Math.abs(clockin.diff(clockout, 'minutes'));
         else if ( !!clockin && !clockout)
             return Math.abs(clockin.diff(moment(), 'minutes'));
-        
+
         return null;
+    },
+
+    focusNextInput: function ($currentInput) {
+        var $nextInput =
+            $currentInput
+            .parents('td')
+            .next()
+            .find('input');
+
+        if (undefined === $nextInput.val())
+            return;
+
+        $nextInput.focus();
+
+        if (is.not.empty($nextInput.val()))
+            page.focusNextInput($nextInput);
+
     }
+
 };
 
 $(document).ready(page.init()); 
