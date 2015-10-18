@@ -6,7 +6,6 @@ It calculates the time worked above or under the estimated time based on users' 
 ## Requirements
 - Composer
 - Bower
-- MongoDB
 - Git (seriously?)
 
 ## Getting Started
