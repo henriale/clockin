@@ -78,11 +78,10 @@ class_alias('Barryvdh\Debugbar\Facade', 'Debugbar');
 |
 */
 if (env('APP_DEBUG')) {
- $app->register(Barryvdh\Debugbar\LumenServiceProvider::class);
+    $app->register(Barryvdh\Debugbar\LumenServiceProvider::class);
 }
 $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
-$app->register(Jenssegers\Mongodb\MongodbServiceProvider::class);
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes
@@ -105,6 +104,6 @@ $app->withEloquent();
 $app->configure('database');
 $app->configure('debugbar');
 
-DB::connection('mongodb')->enableQueryLog();
+DB::connection('mysql')->enableQueryLog();
 
 return $app;
