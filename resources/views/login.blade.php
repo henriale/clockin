@@ -1,5 +1,3 @@
-<?php use App\Workday; ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
