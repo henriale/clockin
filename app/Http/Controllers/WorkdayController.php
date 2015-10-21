@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Workday;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -48,5 +50,22 @@ class WorkdayController extends Controller
         $responseMessage['success'] = true;
 
         return response()->json($responseMessage);
+    }
+
+    public function setWorkingDayCache()
+    {
+        $cacheKey = Auth::user()->id;
+        $data = Request::input('data');
+
+        Cache::forever($cacheKey, $data);
+    }
+
+    public function getWorkingDayCache()
+    {
+        $cacheKey = Auth::user()->id;
+
+        $defaultData = json_encode(['date' => Carbon::now()->format('d/m/Y')]);
+
+        return Cache::get($cacheKey, $defaultData);
     }
 }

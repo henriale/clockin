@@ -18,10 +18,14 @@ $app->get('/logout', ['uses'=>'Auth\AuthController@logout']);
 
 $app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers'], function ($app) {
     $app->get('/', ['uses'=>'AppController@main']);
-    
+
     $app->post('/workday', ['uses'=>'WorkdayController@store', 'as' => 'workday.store']);
-    
+
     $app->put('/workday/{id}', ['uses'=>'WorkdayController@update', 'as' => 'workday.update']);
-    
+
     $app->delete('/workday/{id}', ['uses'=>'WorkdayController@destroy', 'as' => 'workday.destroy']);
+
+    $app->get('/getWorkingDayCache', ['uses'=>'WorkdayController@getWorkingDayCache']);
+
+    $app->post('/setWorkingDayCache', ['uses'=>'WorkdayController@setWorkingDayCache']);
 });
