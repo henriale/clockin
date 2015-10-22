@@ -56,6 +56,10 @@
 </body>
 
 <footer class="scripts">
+    <!-- Angular 1.4.7 -->
+    <script type="text/javascript" src="{{ url('/bower_components/angular/angular.min.js') }}"></script>
+    <!-- Angular Bootstrap 0.14.2 -->
+    <script type="text/javascript" src="{{ url('/bower_components/angular-bootstrap/ui-bootstrap.min.js') }}"></script>
     <!-- jQuery 2.1.4 -->
     <script type="text/javascript" src="{{ url('/bower_components/jquery/dist/jquery.min.js') }}"></script>
     <!-- Bootstrap 4.0-alpha -->
@@ -64,6 +68,6 @@
     <script type="text/javascript" src="{{ url('/bower_components/is_js/is.min.js') }}"></script>
     
     <!-- Page Scripts -->
-    <script type="text/javascript" src="{{ url('/js/auth.js') }}"></script>
+    <script type="text/javascript" src="{{ url('/scripts/pages/signup.js') }}"></script>
 </footer>
 </html>

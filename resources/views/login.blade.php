@@ -62,6 +62,6 @@
     <script type="text/javascript" src="{{ url('/bower_components/is_js/is.min.js') }}"></script>
     
     <!-- Page Scripts -->
-    <script type="text/javascript" src="{{ url('/js/auth.js') }}"></script>
+    <script type="text/javascript" src="{{ url('/scripts/pages/signin.js') }}"></script>
 </footer>
 </html>

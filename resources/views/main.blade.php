@@ -222,6 +222,6 @@
     <!-- Moment.js 2.10.6 -->
     <script type="text/javascript" src="{{ url('/bower_components/moment/min/moment.min.js') }}"></script>
     <!-- Page Scripts -->
-    <script type="text/javascript" src="{{ url('/js/main.js') }}"></script>
+    <script type="text/javascript" src="{{ url('/scripts/pages/main.js') }}"></script>
 </footer>
 </html>
