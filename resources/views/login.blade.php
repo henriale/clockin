@@ -19,11 +19,11 @@
     <!-- Open Iconic -->
     <link href="{{ url('/bower_components/open-iconic/font/css/open-iconic-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- Custom jQuery UI theme 1.11.4 -->
-    <link href="{{ url('/css/jquery-ui/jquery-ui.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('/css/jquery-ui/jquery-ui.theme.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url('assets/css/jquery-ui/jquery-ui.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url('assets/css/jquery-ui/jquery-ui.theme.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- Custom CSS -->
-    <link href="{{ url('/css/custom.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('/css/auth.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url('assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url('assets/css/auth.css') }}" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -54,6 +54,8 @@
 </body>
 
 <footer class="scripts">
+    <!-- Angular 1.4.7 -->
+    <script type="text/javascript" src="{{ url('/bower_components/angular/angular.min.js') }}"></script>
     <!-- jQuery 2.1.4 -->
     <script type="text/javascript" src="{{ url('/bower_components/jquery/dist/jquery.min.js') }}"></script>
     <!-- Bootstrap 4.0-alpha -->
@@ -62,6 +64,6 @@
     <script type="text/javascript" src="{{ url('/bower_components/is_js/is.min.js') }}"></script>
     
     <!-- Page Scripts -->
-    <script type="text/javascript" src="{{ url('/scripts/pages/signin.js') }}"></script>
+    <script type="text/javascript" src="{{ url('app/app.module.js') }}"></script>
 </footer>
 </html>

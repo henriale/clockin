@@ -19,10 +19,10 @@
     <!-- Open Iconic -->
     <link href="{{ url('/bower_components/open-iconic/font/css/open-iconic-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- Custom jQuery UI theme 1.11.4 -->
-    <link href="{{ url('/css/jquery-ui/jquery-ui.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('/css/jquery-ui/jquery-ui.theme.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url('assets/css/jquery-ui/jquery-ui.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url('assets/css/jquery-ui/jquery-ui.theme.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- Custom CSS -->
-    <link href="{{ url('/css/custom.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url('assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -222,6 +222,6 @@
     <!-- Moment.js 2.10.6 -->
     <script type="text/javascript" src="{{ url('/bower_components/moment/min/moment.min.js') }}"></script>
     <!-- Page Scripts -->
-    <script type="text/javascript" src="{{ url('/scripts/pages/main.js') }}"></script>
+    <script type="text/javascript" src="{{ url('app/app.module.js') }}"></script>
 </footer>
 </html>
