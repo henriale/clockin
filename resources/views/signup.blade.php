@@ -24,7 +24,6 @@
     <!-- Custom CSS -->
     <link href="{{ url('assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/css/auth.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/css/angular.css') }}" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -38,20 +37,40 @@
         </div>
         <div class="row">
             <div class="col-sm-12" ng-controller="SignupController">
-                <form name="formSignup" class="form-signup" method="post" action="{{-- url('signup') --}}" novalidate>
+                <form name="formSignup" class="form-signup" method="post" action="{{ url('signup') }}" novalidate>
                     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
 
                     <label for="email" class="sr-only">Email address</label>
-                    <input type="email" name="email" class="form-control" placeholder="Email address" ng-model="user.email" ng-class="" required>
+                    <input type="email" name="email" class="form-control" placeholder="Email address" ng-model="email" ng-class="" required>
 
                     <label for="password" class="sr-only">Password</label>
-                    <input type="password" name="password" class="form-control" placeholder="Password" ng-model="user.password" required ng-minlength="6">
+                    <input type="password" name="password" class="form-control" placeholder="Password" ng-model="password" required ng-minlength="6" ng-change="passCheck()">
 
                     <label for="repeatPassword" class="sr-only">Repeat password</label>
-                    <input type="password" name="repeatPassword" class="form-control" placeholder="Repeat password" ng-model="user.passwordConfirmation" required ng-minlength="6" ng-change="passCheck()">
+                    <input type="password" name="passwordConfirmation" class="form-control" placeholder="Repeat password" ng-model="passwordConfirmation" required ng-change="passCheck()">
                     <br>
 
-                    <button class="btn btn-lg btn-primary-outline btn-block" type="submit" ng-class="{disabled: formSignup.$invalid}" ng-click="formSignup.$valid && register()">Sign up!</button>
+                    <div ng-show="!is.empty(formSignup.$error) && formSignup.$dirty && formSignup.$invalid" class="alert alert-danger alert-dismissible fade in" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        <ul>
+                            <li ng-show="formSignup.email.$invalid"><strong>Email</strong> must be valid.</li>
+                            <li ng-show="formSignup.password.$error.required"><strong>Password</strong> must be provided.</li>
+                            <li ng-show="formSignup.password.$error.minlength"><strong>Password</strong> must have 6 characters, at least.</li>
+                            <li ng-show="formSignup.passwordConfirmation.$error.passCheck"><strong>Password confirmation</strong> must be the same as password.</li>
+                        </ul>
+                    </div>
+                    <br>
+
+                    <button type="submit"
+                            class="btn btn-lg btn-secondary-outline btn-block"
+                            ng-disabled="formSignup.$invalid"
+                            ng-class="{disabled: formSignup.$invalid, 'btn-success-outline':formSignup.$valid}"
+                            ng-click="formSignup.$valid && register()">
+                        Sign up!
+                    </button>
                 </form>
             </div><!-- .col-sm-12 -->
         </div><!-- .row -->
@@ -67,7 +86,7 @@
     <script type="text/javascript" src="{{ url('/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <!-- isJs 0.7.4 -->
     <script type="text/javascript" src="{{ url('/bower_components/is_js/is.min.js') }}"></script>
-    
+
     <!-- Page Scripts -->
     <script type="text/javascript" src="{{ url('app/app.module.js') }}"></script>
 </footer>

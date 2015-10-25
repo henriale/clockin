@@ -145,7 +145,7 @@
                                         <ul class="nav navbar-nav">
                                             <li class="dropdown">
                                                 <a href="#" class="dropdown-toggle dropup-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                                    <img src="images/profile/batman.jpg" alt="" class="img-circle img-responsive">
+                                                    <img src="/assets/img/profile/batman.jpg" alt="" class="img-circle img-responsive">
                                                 </a>
                                                 <ul class="dropdown-menu dropup-menu">
                                                     <li class="dropdown-item"><a href="{{ url('/logout') }}">{{--<span class="oi oi-account-logout"></span>--}}&nbsp;&nbsp;Logout</a></li>

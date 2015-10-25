@@ -4,8 +4,6 @@ var app = angular.module('app', [], function($interpolateProvider) {
 });
 
 app.controller('SignupController', ['$scope', function ($scope) {
-    $scope.user = {};
-
     $scope.register = function () {
 
     };
@@ -13,10 +11,10 @@ app.controller('SignupController', ['$scope', function ($scope) {
     $scope.passCheck = function () {
         var validity = false;
 
-        if ($scope.user.passwordConfirmation === $scope.user.password)
+        if ($scope.passwordConfirmation === $scope.password)
             validity = true;
 
-        $scope.formSignup.$setValidity('passCheck', validity);
+        $scope.formSignup.passwordConfirmation.$setValidity('passCheck', validity);
 
         return validity;
     };

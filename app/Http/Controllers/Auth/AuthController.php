@@ -51,8 +51,8 @@ class AuthController extends \App\Http\Controllers\Controller
         // TODO: get username properly
         $this->validate($request, [
             'email' => 'required|email|unique:users,email',
-            'password' => 'same:repeat-password',
-            'repeat-password' => 'required',
+            'password' => 'same:passwordConfirmation',
+            'passwordConfirmation' => 'required',
         ]);
 
         $credentials = [
