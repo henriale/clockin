@@ -42,7 +42,7 @@
                     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
 
                     <label for="email" class="sr-only">Email address</label>
-                    <input type="email" name="email" class="form-control" placeholder="E`mail address" ng-model="user.email" ng-class="" required>
+                    <input type="email" name="email" class="form-control" placeholder="Email address" ng-model="user.email" ng-class="" required>
 
                     <label for="password" class="sr-only">Password</label>
                     <input type="password" name="password" class="form-control" placeholder="Password" ng-model="user.password" required ng-minlength="6">
