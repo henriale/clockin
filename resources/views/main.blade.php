@@ -154,7 +154,7 @@
                          role="button"
                          aria-haspopup="true"
                          aria-expanded="false">
-                        <img src="{{ url('/images/profile/batman.jpg') }}"
+                        <img src="{{ url('assets/img/profile/batman.jpg') }}"
                              alt=""
                              class="img-circle img-responsive">
                       </a>
