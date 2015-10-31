@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\JsonApi;
 
 use \App\Workday;
+use Illuminate\Support\Facades\Auth;
 use \Symfony\Component\HttpFoundation\Response;
 use \Illuminate\Contracts\Validation\ValidationException;
 
