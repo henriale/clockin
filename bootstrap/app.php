@@ -60,7 +60,8 @@ $app->middleware([
 ]);
 
 $app->routeMiddleware([
-    'auth' => App\Http\Middleware\Authenticate::class
+    'auth' => App\Http\Middleware\Authenticate::class,
+    'jsonapi.basicAuth' => App\Http\Middleware\JsonApiBasicAuth::class,
 ]);
 
 /* Enable Facades use */
@@ -94,8 +95,10 @@ $app->register(App\Providers\AppServiceProvider::class);
 */
 
 $app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
-    require __DIR__.'/../app/Http/routes.php';
+    require __DIR__.'/../app/Http/Routes/appRoutes.php';
 });
+
+require __DIR__.'/../app/Http/Routes/apiRoutes.php';
 
 /* Enable Eloquent use */
 $app->withEloquent();
