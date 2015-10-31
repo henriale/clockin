@@ -1,6 +1,6 @@
 <?php
 
-use \App\Http\Controllers\jsonApi\WorkdayController;
+use \App\Http\Controllers\JsonApi\WorkdayController;
 
 $app->get(
     'workdays',
