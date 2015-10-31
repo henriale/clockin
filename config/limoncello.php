@@ -16,7 +16,7 @@ return [
     |
     */
     C::SCHEMAS => [
-        \App\Models\User::class    => \App\Schemas\UserSchema::class,
+        \App\User::class    => \App\Schemas\UserSchema::class,
         \App\Workday::class        => \App\Schemas\WorkdaySchema::class,
     ],
 
