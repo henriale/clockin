@@ -1,7 +1,7 @@
 <?php namespace App\Http\Middleware;
 
 use \Closure;
-use \Illuminate\Contracts\Auth\Guard;
+use Illuminate\Support\Facades\Auth;
 use \Neomerx\Limoncello\Contracts\IntegrationInterface;
 use \Neomerx\Limoncello\Http\Middleware\BasicAuthMiddleware;
 
@@ -14,12 +14,12 @@ class JsonApiBasicAuth extends BasicAuthMiddleware
      * Create a new filter instance.
      *
      * @param IntegrationInterface $integration
-     * @param Guard                $auth
+     * @param Auth $auth
      */
-    public function __construct(IntegrationInterface $integration, Guard $auth)
+    public function __construct(IntegrationInterface $integration, Auth $auth)
     {
         $authenticateClosure = function ($login, $password) use ($auth) {
-            $isAuthenticated = $auth->attempt([
+            $isAuthenticated = $auth::attempt([
                 'email'    => $login,
                 'password' => $password,
             ]);
