@@ -54,7 +54,10 @@ class Workday extends Model
 
         $monthMinutes = $positiveMonthBalance->diffInMinutes($negativeMonthBalance);
 
-        return $zeroBase->addMinutes($monthMinutes);
+        return [
+            'sign' => $positiveMonthBalance > $negativeMonthBalance ? '+' : '-',
+            'value' => $zeroBase->addMinutes($monthMinutes)
+        ];
     }
 
     public static function groupedByMonth($format = 'F')

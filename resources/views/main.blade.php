@@ -75,7 +75,13 @@
                 <td>&nbsp;</td>
                 <td>Total:</td>
                 <td>
-                  @formatTime($monthlyBalances[$monthName])
+                  @if ($monthlyBalances[$monthName]['sign'] == '-')
+                    <span class="negative-balance">&#45;@formatTime($monthlyBalances[$monthName]['value'])</span>
+                  @elseif ($monthlyBalances[$monthName]['sign'] == '+')
+                    <span class="positive-balance">&#43;@formatTime($monthlyBalances[$monthName]['value'])</span>
+                  @else
+                    <span class="">@formatTime($monthlyBalances[$monthName]['value'])</span>
+                  @endif
                 </td>
                 <td>&nbsp;</td>
               </tr>
