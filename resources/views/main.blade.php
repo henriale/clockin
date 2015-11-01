@@ -161,7 +161,7 @@
                 </td>
                 <td>
                   <div class="form-group">
-                    <input type="date"
+                    <input type="text"
                            name="date"
                            id="date"
                            class="form-control"
@@ -171,7 +171,7 @@
                 </td>
                 <td>
                   <div class="form-group">
-                    <input type="time"
+                    <input type="text"
                            name="in1"
                            id="in1"
                            class="form-control"
@@ -181,7 +181,7 @@
                 </td>
                 <td>
                   <div class="form-group">
-                    <input type="time"
+                    <input type="text"
                            name="out1"
                            id="out1"
                            class="form-control"
@@ -191,7 +191,7 @@
                 </td>
                 <td>
                   <div class="form-group">
-                    <input type="time"
+                    <input type="text"
                            name="in2"
                            id="in2"
                            class="form-control"
@@ -201,7 +201,7 @@
                 </td>
                 <td>
                   <div class="form-group">
-                    <input type="time"
+                    <input type="text"
                            name="out2"
                            id="out2"
                            class="form-control"
@@ -211,7 +211,7 @@
                 </td>
                 <td>
                   <div class="form-group">
-                    <input type="time"
+                    <input type="text"
                            name="in3"
                            id="in3"
                            class="form-control"
@@ -221,7 +221,7 @@
                 </td>
                 <td>
                   <div class="form-group">
-                    <input type="time"
+                    <input type="text"
                            name="out3"
                            id="out3"
                            class="form-control"
