@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="@yield('ng-app')">
 <head>
   <!-- Required meta tags always come first -->
   <meta charset="utf-8">
