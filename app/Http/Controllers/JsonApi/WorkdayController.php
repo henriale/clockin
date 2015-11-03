@@ -86,7 +86,9 @@ class WorkdayController extends JsonApiController
 
         /** @var \Illuminate\Validation\Validator $validator */
         $rules     = [
-            'name' => 'required'
+            'date'     => 'required',
+            'arrival1' => 'required',
+            'leaving1' => 'required',
         ];
         /** @noinspection PhpUndefinedClassInspection */
         $validator = \Validator::make($attributes, $rules);
