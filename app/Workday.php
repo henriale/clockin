@@ -3,8 +3,10 @@
 namespace App;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Validator;
 
 class Workday extends Model
 {
@@ -21,6 +23,32 @@ class Workday extends Model
      */
     protected $casts = [
         //'date' => 'datetime',
+    ];
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [];
+
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [
+        'id'
+    ];
+
+    /**
+     * The default time for workload.
+     *
+     * @var array
+     */
+    protected $defaultWorkload = [
+        'hours' => 8,
+        'minutes' => 0
     ];
 
     public function user()
@@ -83,7 +111,27 @@ class Workday extends Model
 
     protected static function isTimeSet($time)
     {
+        if (null === $time)
+            return false;
+
         return (bool) ((int) (new Carbon($time))->format('His'));
+    }
+
+    protected function validateTime($field, &$time)
+    {
+        $validation = Validator::make(
+            [$field => $time],
+            [$field => ['regex:/(([0-9]){2}:([0-9]){2})/', 'size:5']],
+            [
+                'regex' => 'The :attribute time format is invalid.',
+                'size' => 'The :attribute time format is invalid.'
+            ]
+        );
+
+        $time = "$time:00";
+
+        if ($validation->fails())
+            throw new ValidationException($validation);
     }
 
     public function getBalanceAttribute($balance)
@@ -124,65 +172,150 @@ class Workday extends Model
 
     public function setDateAttribute($date)
     {
-        $date = Carbon::createFromFormat('d/m/Y', $date);
+        if ( ! ($date instanceof Carbon))
+            $date = Carbon::createFromFormat('d/m/Y', $date);
+
         $this->attributes['date'] = $date;
     }
 
     public function getDateAttribute($date)
     {
-        return Carbon::createFromFormat('Y-m-d', $date);
+        if ( ! ($date instanceof Carbon))
+            $date = Carbon::createFromFormat('Y-m-d', $date);
+
+        return $date;
     }
 
     public function getArrival1Attribute($time)
     {
-        if(false === self::isTimeSet($time))
-            return false;
+        if ($time instanceof Carbon)
+            $time = $time->format('H:i:s');
+
+        if (false === self::isTimeSet($time))
+            return null;
 
         return Carbon::createFromFormat('H:i:s', $time);
     }
+
+    public function setArrival1Attribute($time)
+    {
+        $this->validateTime('arrival1', $time);
+
+        $this->attributes['arrival1'] = $time;
+    }
+
 
     public function getLeaving1Attribute($time)
     {
-        if(false === self::isTimeSet($time))
-            return false;
+        if ($time instanceof Carbon)
+            $time = $time->format('H:i:s');
+
+        if (false === self::isTimeSet($time))
+            return null;
 
         return Carbon::createFromFormat('H:i:s', $time);
     }
+
+    public function setLeaving1Attribute($time)
+    {
+        $this->validateTime('leaving1', $time);
+
+        $this->attributes['leaving1'] = $time;
+    }
+
 
     public function getArrival2Attribute($time)
     {
-        if(false === self::isTimeSet($time))
-            return false;
+        if ($time instanceof Carbon)
+            $time = $time->format('H:i:s');
+
+        if (false === self::isTimeSet($time))
+            return null;
 
         return Carbon::createFromFormat('H:i:s', $time);
     }
+
+    public function setArrival2Attribute($time)
+    {
+        $this->validateTime('arrival2', $time);
+
+        $this->attributes['arrival2'] = $time;
+    }
+
 
     public function getLeaving2Attribute($time)
     {
-        if(false === self::isTimeSet($time))
-            return false;
+        if ($time instanceof Carbon)
+            $time = $time->format('H:i:s');
+
+        if (false === self::isTimeSet($time))
+            return null;
 
         return Carbon::createFromFormat('H:i:s', $time);
     }
+
+    public function setLeaving2Attribute($time)
+    {
+        $this->validateTime('leaving2', $time);
+
+        $this->attributes['leaving2'] = $time;
+    }
+
 
     public function getArrival3Attribute($time)
     {
-        if(false === self::isTimeSet($time))
-            return false;
+        if ($time instanceof Carbon)
+            $time = $time->format('H:i:s');
+
+        if (false === self::isTimeSet($time))
+            return null;
 
         return Carbon::createFromFormat('H:i:s', $time);
     }
+
+    public function setArrival3Attribute($time)
+    {
+        $this->validateTime('arrival3', $time);
+
+        $this->attributes['arrival3'] = $time;
+    }
+
 
     public function getLeaving3Attribute($time)
     {
-        if(false === self::isTimeSet($time))
-            return false;
+        if ($time instanceof Carbon)
+            $time = $time->format('H:i:s');
+
+        if (false === self::isTimeSet($time))
+            return null;
 
         return Carbon::createFromFormat('H:i:s', $time);
     }
+
+    public function setLeaving3Attribute($time)
+    {
+        $this->validateTime('leaving3', $time);
+
+        $this->attributes['leaving3'] = $time;
+    }
+
 
     public function getWorkloadAttribute($time)
     {
+        if ($time instanceof Carbon)
+            $time = $time->format('H:i:s');
+
+        if (false === self::isTimeSet($time))
+            return Carbon::createFromTime($this->defaultWorkload['hours'], $this->defaultWorkload['minutes']);
+
         return Carbon::createFromFormat('H:i:s', $time);
     }
+
+    public function setWorkloadAttribute($time)
+    {
+        $this->validateTime('workload', $time);
+
+        $this->attributes['workload'] = $time;
+    }
+
 }
