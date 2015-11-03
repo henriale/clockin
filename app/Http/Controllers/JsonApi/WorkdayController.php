@@ -36,6 +36,8 @@ class WorkdayController extends JsonApiController
         /** @var \Illuminate\Validation\Validator $validator */
         $rules     = [
             'date'     => 'required',
+            'arrival1' => 'required',
+            'leaving1' => 'required',
         ];
         /** @noinspection PhpUndefinedClassInspection */
         $validator = \Validator::make($attributes, $rules);
@@ -43,8 +45,9 @@ class WorkdayController extends JsonApiController
             throw new ValidationException($validator);
         }
 
-        $attributes['user_id'] = Auth::user()->id;
-        $workday = new Workday($attributes);
+        $workday = new Workday();
+        $workday->user_id = Auth::user()->id;
+        $workday->fill($attributes);
         $workday->save();
 
         return $this->getCreatedResponse($workday);
