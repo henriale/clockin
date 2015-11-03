@@ -20,7 +20,7 @@ class WorkdayController extends JsonApiController
     {
         $this->checkParametersEmpty();
 
-        return $this->getResponse(Workday::where('user_id', Auth::user()->id)->get());
+        return $this->getResponse(User::find(Auth::user()->id)->workdays()->get());
     }
 
     /**
@@ -94,7 +94,7 @@ class WorkdayController extends JsonApiController
             throw new ValidationException($validator);
         }
 
-        $workday = Workday::where('user_id', Auth::user()->id)->firstOrFail($id);
+        $workday = User::find(Auth::user()->id)->workdays()->where('id', $id)->firstOrFail();
         $workday->fill($attributes);
         $workday->save();
 
@@ -112,7 +112,7 @@ class WorkdayController extends JsonApiController
     {
         $this->checkParametersEmpty();
 
-        $workday = Workday::where('user_id', Auth::user()->id)->firstOrFail($id);
+        $workday = User::find(Auth::user()->id)->workdays()->where('id', $id)->firstOrFail();
         $workday->delete();
 
         return $this->getCodeResponse(Response::HTTP_NO_CONTENT);
