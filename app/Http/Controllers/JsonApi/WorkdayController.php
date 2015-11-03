@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\JsonApi;
 
+use App\User;
 use \App\Workday;
 use Illuminate\Support\Facades\Auth;
 use \Symfony\Component\HttpFoundation\Response;
@@ -64,7 +65,7 @@ class WorkdayController extends JsonApiController
     {
         $this->checkParametersEmpty();
 
-        return $this->getResponse(Workday::where('user_id', Auth::user()->id)->firstOrFail($id));
+        return $this->getResponse(User::find(Auth::user()->id)->workdays()->where('id', $id)->firstOrFail());
     }
 
     /**
