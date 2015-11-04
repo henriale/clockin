@@ -82,8 +82,11 @@ class Workday extends Model
 
         $monthMinutes = $positiveMonthBalance->diffInMinutes($negativeMonthBalance);
 
+        $sign = $positiveMonthBalance > $negativeMonthBalance ? '+' : '-';
+        $sign = $positiveMonthBalance == $negativeMonthBalance ? null : $sign;
+        
         return [
-            'sign' => $positiveMonthBalance > $negativeMonthBalance ? '+' : '-',
+            'sign' => $sign,
             'value' => $zeroBase->addMinutes($monthMinutes)
         ];
     }
