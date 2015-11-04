@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AuthController extends \App\Http\Controllers\Controller
+class AuthController extends Controller
 {
-    
     public function login()
     {
         if (Auth::check() === true)
@@ -17,6 +17,7 @@ class AuthController extends \App\Http\Controllers\Controller
 
         return view('login');
     }
+
     public function logout()
     {
         // TODO: Validation
@@ -64,11 +65,14 @@ class AuthController extends \App\Http\Controllers\Controller
         try {
             $user = User::create($credentials);
         } catch (QueryException $e) {
-            dd($e->errorInfo[2]);
+            $errorMessage = $e->errorInfo[2];
         }
 
-        Auth::login($user);
-
-        return redirect('/');
+        return redirect('/login')->with([
+            'messages' => [[
+                'type' => isset($errorMessage) ? 'danger': 'success',
+                'text' => isset($errorMessage) ?: 'Registration completed!'
+            ]]
+        ]);
     }
 }

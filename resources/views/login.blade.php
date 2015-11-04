@@ -17,6 +17,9 @@
 @section('content')
   <div class="col-sm-12">
     <form class="form-signin" method="post" action="{{ url('login') }}">
+
+      @include('partials/messages')
+
       <input type="hidden" name="_token" value="{!! csrf_token() !!}">
       <label for="inputEmail" class="sr-only">Email address</label>
       <input type="email" name="email" class="form-control" placeholder="Email address" required="" autofocus="">
