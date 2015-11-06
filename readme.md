@@ -4,9 +4,8 @@ Basic application, made with [Lumen Framework](http://lumen.laravel.com/), to st
 It calculates the time worked above or under the estimated time based on users' arrivals and leavings from work.
 
 ## Requirements
-- Composer
-- Bower
-- Git (seriously?)
+- [Composer](https://getcomposer.org)
+- [Bower](http://bower.io)
 
 ## Getting Started
 ##### Download and install 
@@ -20,13 +19,25 @@ $ bower install
 ##### Setup environment
 ```bash
 $ cp .env.example .env
+# then, fill out your environment information
 $ vim .env
+```
+
+##### Build up database
+```bash
+$ php artisan migrate
+$ php artisan db:seed
 ```
 
 ##### Run Server
 ```bash
 $ php artisan serve
 ```
+
+# API
+The Clockin API is based on [Limoncello Shot](https://github.com/neomerx/limoncello-shot) which implements [jsonAPI](http://jsonapi.org). As you run the server, the API will be working. Just make sure you have set everything up at the `.env` file.
+##### Authentication
+It uses the basic authentication. So, just use `email` as `username` and `password` as `password`.
 
 ### License
 
