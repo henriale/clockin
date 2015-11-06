@@ -23,11 +23,11 @@ class WorkdayController extends Controller
         $workday->user_id = Auth::user()->id;
         $workday->save();
 
-        return redirect()->back()->with([
-            'message' => [
+        return redirect('/')->with([
+            'messages' => [[
                 'type' => 'success',
-                'text' => 'Registro salvo com sucesso!',
-            ]
+                'text' => 'Workday time successfully registered!'
+            ]]
         ]);
     }
 

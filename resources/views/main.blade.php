@@ -2,24 +2,19 @@
 
 @section('title')
   Track your working time
-@stop
+@endsection
 
 @section('header')
   <div class="col-sm-12">
     <p class="title">ClockIn.</p>
   </div>
-@stop
+@endsection
 
 @section('content')
   <div class="col-sm-12">
-    @if (session('message'))
-      <div class="alert alert-{{ $message['type'] }} alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        {{ $message['text'] }}
-      </div>
-    @endif
+
+    @include('partials/messages')
+
     <table class="table out-table">
       @forelse ($months as $monthName => $monthWorkdays)
         <tr>
@@ -112,7 +107,7 @@
       @endforelse
     </table>
   </div>
-@stop
+@endsection
 
 @section('scripts')
   <!-- jQuery UI 1.11.4 -->
@@ -127,7 +122,7 @@
   <script type="text/javascript" src="{{ url('/bower_components/moment/min/moment.min.js') }}"></script>
   <!-- Page Scripts -->
   <script type="text/javascript" src="{{ url('assets/js/pages/main.js') }}"></script>
-@stop
+@endsection
 
 @section('footer')
   <br />
@@ -249,4 +244,4 @@
       </div>
     </div>
   </div>
-@stop
+@endsection
