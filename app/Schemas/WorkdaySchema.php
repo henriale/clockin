@@ -1,7 +1,6 @@
 <?php namespace App\Schemas;
 
 use \App\Workday;
-use Carbon\Carbon;
 use \Neomerx\JsonApi\Schema\SchemaProvider;
 
 /**
