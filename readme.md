@@ -34,7 +34,7 @@ $ php artisan db:seed
 $ php artisan serve
 ```
 
-# API
+## API
 The Clockin API is based on [Limoncello Shot](https://github.com/neomerx/limoncello-shot) which implements [jsonAPI](http://jsonapi.org). As you run the server, the API will be working. Just make sure you have set everything up at the `.env` file.
 ##### Authentication
 It uses the basic authentication. So, just use `email` as `username` and `password` as `password`.
