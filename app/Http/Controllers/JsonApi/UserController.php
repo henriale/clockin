@@ -110,14 +110,9 @@ class UserController extends JsonApiController
         $this->checkParametersEmpty();
         $user = User::where('email', $email)->firstOrFail();
 
-        $exists = false;
         if ($user instanceof User)
-            $exists = true;
+            return $this->getCodeResponse(Response::HTTP_NO_CONTENT);
 
-        return $this->getResponse(User::where('email', $email)->firstOrFail(), Response::HTTP_OK, []);
-
-        return response()->json([
-            'exists' => $exists
-        ]);
+        return $this->getCodeResponse(Response::HTTP_NOT_FOUND);
     }
 }
