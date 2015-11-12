@@ -136,7 +136,7 @@ var page = {
             }
         });
         
-        var refreshTime = setInterval(page.refreshTime, 1200);
+        var refreshWorkedTime = setInterval(page.refreshWorkedTime, 1200);
 
         page.registrationForm.find('input').on({
             focusout: function () {
@@ -146,6 +146,8 @@ var page = {
 
         // focus input on start
         page.focusNextInput(page.date);
+
+        var refreshWorkedPercentage = setInterval(page.refreshWorkedPercentage, 60000);
     },
 
     resetInputAlerts: function () {
@@ -154,7 +156,7 @@ var page = {
         page.timetable.find('.form-group').removeClass('has-error');
     },
 
-    refreshTime: function () {
+    refreshWorkedTime: function () {
         var in1, out1, in2, out2, in3, out3;
 
         if (is.timeString(page.in1.val()))
@@ -195,11 +197,45 @@ var page = {
         var thirdPeriod = page.calcInterval(in3, out3);
 
         var workedTime = new Date(0, 0, 0, 0, 0, 0);
-        workedTime.setMinutes(firstPeriod + secondPeriod + thirdPeriod);
+        var workedTimeSum = firstPeriod + secondPeriod + thirdPeriod;
+        workedTime.setMinutes(workedTimeSum);
 
         $('#current-worktime').html(moment(workedTime).format('HH:mm'));
+
+        return workedTimeSum;
     },
 
+    refreshWorkedPercentage: function () {
+        var workedTimeSum = page.refreshWorkedTime();
+        var percentageTime = parseInt(workedTimeSum / 4.6);
+        var config = {
+            updateTitle: false,
+            animated: true,
+            borderColor: '#0275d8',
+            fillColor: '#0275d8',
+            shadowColor: '#DDD',
+            titleRenderer: function (v, t) {
+                return t;
+            }
+        };
+
+
+        if (percentageTime > 100) {
+            percentageTime -= 100;
+            config = {
+                updateTitle: false,
+                animated: true,
+                borderColor: '#FFCC00',
+                fillColor: '#FFCC00',
+                shadowColor: '#0275d8',
+                titleRenderer: function (v, t) {
+                    return t;
+                }
+            };
+        }
+
+        FavIconX.config(config).setValue(percentageTime);
+    },
     calcInterval: function (clockin, clockout) {
         if ( !!clockin && !!clockout)
             return Math.abs(clockin.diff(clockout, 'minutes'));

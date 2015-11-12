@@ -120,6 +120,8 @@
   <script type="text/javascript" src="{{ url('/bower_components/jquery.cookie/jquery.cookie.js') }}"></script>
   <!-- Moment.js 2.10.6 -->
   <script type="text/javascript" src="{{ url('/bower_components/moment/min/moment.min.js') }}"></script>
+  <!-- FaviconX.js 1.0.1 -->
+  <script type="text/javascript" src="{{ url('/bower_components/faviconx/faviconx-min.js') }}"></script>
   <!-- Page Scripts -->
   <script type="text/javascript" src="{{ url('assets/js/pages/main.js') }}"></script>
 @endsection
