@@ -12,6 +12,8 @@ class WorkdayController extends Controller
 {
     public function store()
     {
+        $date = Carbon::createFromFormat('d/m/Y', Request::input('date'));
+
         $workday = new Workday();
         $workday->date = Request::input('date');
         $workday->arrival1 = Request::input('in1');
@@ -21,6 +23,7 @@ class WorkdayController extends Controller
         $workday->arrival3 = Request::input('in3');
         $workday->leaving3 = Request::input('out3');
         $workday->user_id = Auth::user()->id;
+        $workday->workload = $date->isWeekend() ? '00:00' : '08:00';
         $workday->save();
 
         return redirect('/')->with([

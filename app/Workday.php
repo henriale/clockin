@@ -41,16 +41,6 @@ class Workday extends Model
         'id'
     ];
 
-    /**
-     * The default time for workload.
-     *
-     * @var array
-     */
-    protected $defaultWorkload = [
-        'hours' => 8,
-        'minutes' => 0
-    ];
-
     public function user()
     {
         return $this->belongsTo('App\User');
@@ -307,9 +297,6 @@ class Workday extends Model
     {
         if ($time instanceof Carbon)
             $time = $time->format('H:i:s');
-
-        if (false === self::isTimeSet($time))
-            return Carbon::createFromTime($this->defaultWorkload['hours'], $this->defaultWorkload['minutes']);
 
         return Carbon::createFromFormat('H:i:s', $time);
     }
