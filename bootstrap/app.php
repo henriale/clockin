@@ -66,7 +66,6 @@ $app->routeMiddleware([
 
 /* Enable Facades use */
 $app->withFacades();
-class_alias('Barryvdh\Debugbar\Facade', 'Debugbar');
 
 /*
 |--------------------------------------------------------------------------
