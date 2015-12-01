@@ -46,6 +46,10 @@ class Workday extends Model
         return $this->belongsTo('App\User');
     }
 
+    /**
+     * @param null $month written month
+     * @return array
+     */
     public static function monthBalance($month = null)
     {
         if(empty($month))
@@ -81,6 +85,12 @@ class Workday extends Model
         ];
     }
 
+    /**
+     * return workdays grouped by month
+     *
+     * @param string $format date representation for month
+     * @return mixed
+     */
     public static function groupedByMonth($format = 'F')
     {
         return self::orderBy('date', 'DESC')
@@ -92,6 +102,12 @@ class Workday extends Model
             });
     }
 
+    /**
+     * return all days of specified month
+     *
+     * @param Carbon $month
+     * @return mixed
+     */
     public static function daysInMonth(Carbon $month) {
         return self::where(function ($query) use ($month) {
             $query->where('date', '>=', clone $month);
@@ -102,6 +118,12 @@ class Workday extends Model
             ->get();
     }
 
+    /**
+     * Check if time is set
+     *
+     * @param $time
+     * @return bool
+     */
     protected static function isTimeSet($time)
     {
         if (null === $time)
@@ -110,6 +132,12 @@ class Workday extends Model
         return (bool) ((int) (new Carbon($time))->format('His'));
     }
 
+    /**
+     * Validate format of a single field
+     *
+     * @param $field
+     * @param $time
+     */
     protected function validateTime($field, &$time)
     {
         $validation = Validator::make(
@@ -127,6 +155,10 @@ class Workday extends Model
             throw new ValidationException($validation);
     }
 
+    /**
+     * @param $balance
+     * @return object
+     */
     public function getBalanceAttribute($balance)
     {
         // TODO: improve this method
@@ -163,6 +195,9 @@ class Workday extends Model
         ];
     }
 
+    /**
+     * @param $date
+     */
     public function setDateAttribute($date)
     {
         if ( ! ($date instanceof Carbon))
@@ -171,6 +206,10 @@ class Workday extends Model
         $this->attributes['date'] = $date;
     }
 
+    /**
+     * @param $date
+     * @return static
+     */
     public function getDateAttribute($date)
     {
         if ( ! ($date instanceof Carbon))
@@ -179,6 +218,10 @@ class Workday extends Model
         return $date;
     }
 
+    /**
+     * @param $time
+     * @return null|static
+     */
     public function getArrival1Attribute($time)
     {
         if ($time instanceof Carbon)
@@ -190,6 +233,9 @@ class Workday extends Model
         return Carbon::createFromFormat('H:i:s', $time);
     }
 
+    /**
+     * @param $time
+     */
     public function setArrival1Attribute($time)
     {
         $this->validateTime('arrival1', $time);
@@ -198,6 +244,10 @@ class Workday extends Model
     }
 
 
+    /**
+     * @param $time
+     * @return null|static
+     */
     public function getLeaving1Attribute($time)
     {
         if ($time instanceof Carbon)
@@ -209,6 +259,9 @@ class Workday extends Model
         return Carbon::createFromFormat('H:i:s', $time);
     }
 
+    /**
+     * @param $time
+     */
     public function setLeaving1Attribute($time)
     {
         $this->validateTime('leaving1', $time);
@@ -217,6 +270,10 @@ class Workday extends Model
     }
 
 
+    /**
+     * @param $time
+     * @return null|static
+     */
     public function getArrival2Attribute($time)
     {
         if ($time instanceof Carbon)
@@ -228,6 +285,9 @@ class Workday extends Model
         return Carbon::createFromFormat('H:i:s', $time);
     }
 
+    /**
+     * @param $time
+     */
     public function setArrival2Attribute($time)
     {
         $this->validateTime('arrival2', $time);
@@ -236,6 +296,10 @@ class Workday extends Model
     }
 
 
+    /**
+     * @param $time
+     * @return null|static
+     */
     public function getLeaving2Attribute($time)
     {
         if ($time instanceof Carbon)
@@ -247,6 +311,9 @@ class Workday extends Model
         return Carbon::createFromFormat('H:i:s', $time);
     }
 
+    /**
+     * @param $time
+     */
     public function setLeaving2Attribute($time)
     {
         $this->validateTime('leaving2', $time);
@@ -255,6 +322,10 @@ class Workday extends Model
     }
 
 
+    /**
+     * @param $time
+     * @return null|static
+     */
     public function getArrival3Attribute($time)
     {
         if ($time instanceof Carbon)
@@ -266,6 +337,9 @@ class Workday extends Model
         return Carbon::createFromFormat('H:i:s', $time);
     }
 
+    /**
+     * @param $time
+     */
     public function setArrival3Attribute($time)
     {
         $this->validateTime('arrival3', $time);
@@ -274,6 +348,10 @@ class Workday extends Model
     }
 
 
+    /**
+     * @param $time
+     * @return null|static
+     */
     public function getLeaving3Attribute($time)
     {
         if ($time instanceof Carbon)
@@ -285,6 +363,9 @@ class Workday extends Model
         return Carbon::createFromFormat('H:i:s', $time);
     }
 
+    /**
+     * @param $time
+     */
     public function setLeaving3Attribute($time)
     {
         $this->validateTime('leaving3', $time);
@@ -293,6 +374,10 @@ class Workday extends Model
     }
 
 
+    /**
+     * @param $time
+     * @return static
+     */
     public function getWorkloadAttribute($time)
     {
         if ($time instanceof Carbon)
@@ -301,6 +386,9 @@ class Workday extends Model
         return Carbon::createFromFormat('H:i:s', $time);
     }
 
+    /**
+     * @param $time
+     */
     public function setWorkloadAttribute($time)
     {
         $this->validateTime('workload', $time);
