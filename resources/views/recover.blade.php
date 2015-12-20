@@ -12,7 +12,7 @@
 
 @section('header')
     <div class="col-sm-12">
-        <p class="title">ClockIn.</p>
+        <a href="{{ url('/') }}" style="text-decoration:none;"><p class="title">ClockIn.</p></a>
     </div>
 @stop
 
