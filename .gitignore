@@ -1,0 +1,26 @@
+.env
+/vendor
+/node_modules
+/.idea/*
+/.vagrant
+/public/bower_components
+/database/dumps
+/bootstrap/compiled.php
+
+.DS_Store
+Thumbs.db
+composer.lock
+composer.phar
+
+npm-debug.log
+Homestead.json
+Homestead.yaml
+_ide_helper.php
+_ide_helper_models.php
+.phpstorm.meta.php
+
+Vagrantfile
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

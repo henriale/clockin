@@ -15,8 +15,9 @@ class AuthController extends Controller
 {
     public function login()
     {
-        if (Auth::check() == true)
+        if (Auth::check() === true) {
             return redirect('/');
+        }
 
         return view('login');
     }
@@ -41,8 +42,9 @@ class AuthController extends Controller
             'password' => Request::input('password')
         ];
 
-        if( ! Auth::attempt($credentials, true))
+        if( ! Auth::attempt($credentials, true)) {
             return redirect('login');
+        }
 
         Auth::login(Auth::user());
         return redirect('/');
@@ -81,55 +83,4 @@ class AuthController extends Controller
             ]]
         ]);
     }
-
-    public function recover()
-    {
-        return view('recover');
-    }
-
-    public function resetPassword()
-    {
-        $email = Request::input('email');
-
-        $matched_user = User::exists('email', $email);
-
-        if (!$matched_user) {
-            return view('signup');
-        }
-
-        $token = User::$matched_row['remember_token'];
-
-        $body = "<a href='http://localhost:8000/restore?k=$token' target='_blank'>";
-        $body .= 'Click here to reset your password</a>';
-
-        Mail::raw($body, function($message){
-            $message->subject('Reset your password');
-            $message->to('bruno9pereira@gmail.com');
-        });
-
-        return view('login');
-    }
-
-    public function restore()
-    {
-        $remember_token = Request::only('k')['k'];
-
-        return view('restore')
-                ->with(compact('remember_token'));
-    }
-
-    public function rebuildPassowrd()
-    {
-        try {
-            User::where('email', Request::input('email'))
-                ->where('remember_token', Request::input('remember_token'))
-                ->update(['password' => bcrypt(Request::input('password'))]);
-        } catch (QueryException $e) {
-            $errorMessage = $e->errorInfo[2];
-        }
-
-        return redirect('/login');
-    }
 }
-
-function printr($string){echo'<pre>';print_r($string);echo'</pre>';}function printrx($string){die(printr($string));}

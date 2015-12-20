@@ -54,5 +54,3 @@ class RestorePasswordController extends Controller
         return redirect('/login');
     }
 }
-
-function printr($string){echo'<pre>';print_r($string);echo'</pre>';}function printrx($string){die(printr($string));}

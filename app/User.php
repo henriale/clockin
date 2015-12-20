@@ -9,8 +9,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Support\Facades\DB;
 
-class User extends Model implements AuthenticatableContract,
-                                    CanResetPasswordContract
+class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
     use Authenticatable, CanResetPassword;
 
@@ -53,5 +52,3 @@ class User extends Model implements AuthenticatableContract,
         return false;
     }
 }
-
-function printr($string){echo'<pre>';print_r($string);echo'</pre>';}function printrx($string){die(printr($string));}
