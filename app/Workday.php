@@ -65,23 +65,16 @@ class Workday extends Model
 
         foreach($workdays as $workday) {
             $minutes = $zeroBase->diffInMinutes($workday->balance->value);
-
-            if($workday->balance->sign == '+') {
+            if ($workday->balance->sign == '+') {
                 $positiveMonthBalance->addMinutes($minutes);
-            }
-            elseif($workday->balance->sign == '-') {
+            } elseif ($workday->balance->sign == '-') {
                 $negativeMonthBalance->addMinutes($minutes);
             }
         }
 
-        $monthMinutes = $positiveMonthBalance->diffInMinutes($negativeMonthBalance);
-
-        $sign = $positiveMonthBalance > $negativeMonthBalance ? '+' : '-';
-        $sign = $positiveMonthBalance == $negativeMonthBalance ? null : $sign;
-        
         return [
-            'sign' => $sign,
-            'value' => $zeroBase->addMinutes($monthMinutes)
+            'positive' => $positiveMonthBalance->format('H:i'),
+            'negative' => $negativeMonthBalance->format('H:i')
         ];
     }
 
@@ -397,3 +390,5 @@ class Workday extends Model
     }
 
 }
+
+function printr($string){echo'<pre>';print_r($string);};function printrx($string){printr($string);die();};
