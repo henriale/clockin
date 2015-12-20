@@ -1,0 +1,116 @@
+
+* {
+    /*font-family: 'Raleway', 'lato', 'Helvetica Neue';*/
+    font-size: 16px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+h1 {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 26.3999996185303px;
+}
+h3 {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 15.3999996185303px;
+}
+p {
+    font-size: 14px;
+    line-height: 20px;
+}
+input {
+    font-size: 13px;
+    line-height: 18.5714302062988px;
+}
+blockquote {
+    font-size: 21px;
+    line-height: 30px;
+}
+pre {
+    font-size: 13px;
+    line-height: 18.5714302062988px;
+}
+tr th {
+    font-weight: bold;
+    font-size: 15px;
+    color: #4a4a4a;
+    text-transform: uppercase;
+    line-height: 20px;
+}
+tr td, tr th {
+    text-align: center;
+}
+tr td {
+    color: #748090;
+    padding: 0.70rem;
+}
+
+.days-table-header td {
+    font-size: 15px;
+    font-weight: 600;
+}
+.days-table tbody > tr td:nth-child(2n+2) {
+    border-left: 1px solid #ECEEEF;
+}
+.days-table tbody > tr:last-child td, .month-title, .days-table-header {
+    border-bottom: 1px solid #ECEEEF;
+}
+.days-table tbody > tr:last-child td {
+    border-top: 1px solid #ECEEEF;
+    border-left: none;
+}
+.out-table tbody > tr td {
+    border: none;
+}
+.positive-balance {
+    color: #3C763D;
+}
+.negative-balance {
+    color: #A94442;
+}
+
+.title {
+    font-size: 96px;
+    margin-top: 50px;
+    margin-bottom: 60px;
+    color: #748090;
+    text-align: center;
+    font-weight: 100;
+    font-family: 'Lato';
+}
+
+#fixed-register-form {
+    position: fixed;
+    bottom:0;
+    background: white;
+}
+#fixed-register-form table {
+    margin: 0;
+}
+
+#current-worktime {
+    font-size: 22px;
+    margin: 10px 0;
+}
+
+/* dropdown style */
+.dropup-menu {
+top: auto;
+bottom: 125% !important;
+}
+.dropup-toggle img {
+    max-width: 40px;
+    max-height: 40px;
+}
+.dropup-toggle:after {
+display: block;
+content: normal;
+}
+/* fix color */
+.dropdown-item a {
+    color: #373a3c!important;
+    text-decoration: none;
+}
