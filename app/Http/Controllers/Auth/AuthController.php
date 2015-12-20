@@ -43,7 +43,12 @@ class AuthController extends Controller
         ];
 
         if( ! Auth::attempt($credentials, true)) {
-            return redirect('login');
+            return view('/login')->with([
+                'messages' => [[
+                    'type' =>  'danger',
+                    'text' => 'Invalid e-mail or password'
+                ]]
+            ]);
         }
 
         Auth::login(Auth::user());
