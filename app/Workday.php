@@ -7,9 +7,13 @@ use Illuminate\Contracts\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
+use PhpParser\Node\Expr\Cast\Object_;
 
 class Workday extends Model
 {
+    /** @const FIFTY_PERCENT_SALARY_MINUTES_LIMIT time limit to get 50% salary  */
+    const FIFTY_PERCENT_SALARY_MINUTES_LIMIT = 120;
+
     /**
      * The attributes that should be mutated to dates.
      *
@@ -41,6 +45,15 @@ class Workday extends Model
         'id'
     ];
 
+    /** @var $positiveMonthBalance50 average minutes worked getting 50% more salary */
+    private static $positiveMonthBalance50;
+
+    /** @var $positiveMonthBalance100 average minutes worked getting 100% more salary */
+    private static $positiveMonthBalance100;
+
+    /** @var $negativeMonthBalance average minutes not worked */
+    private static $negativeMonthBalance;
+
     public function user()
     {
         return $this->belongsTo('App\User');
@@ -52,37 +65,60 @@ class Workday extends Model
      */
     public static function monthBalance($month = null)
     {
-        if(empty($month))
+        if(empty($month)) {
             $month = 'this month';
+        }
 
         $month = new Carbon("first day of {$month}");
 
-        $positiveMonthBalance = Carbon::createFromTime(0, 0, 0);
-        $negativeMonthBalance = Carbon::createFromTime(0, 0, 0);
+        self::$positiveMonthBalance50 = Carbon::createFromTime(0, 0, 0);
+        self::$positiveMonthBalance100 = Carbon::createFromTime(0, 0, 0);
+        self::$negativeMonthBalance = Carbon::createFromTime(0, 0, 0);
         $zeroBase = Carbon::createFromTime(0, 0, 0);
 
         $workdays = self::daysInMonth($month);
 
         foreach($workdays as $workday) {
-            $minutes = $zeroBase->diffInMinutes($workday->balance->value);
-
-            if($workday->balance->sign == '+') {
-                $positiveMonthBalance->addMinutes($minutes);
-            }
-            elseif($workday->balance->sign == '-') {
-                $negativeMonthBalance->addMinutes($minutes);
-            }
+            self::addMonthBalance($workday, $zeroBase->diffInMinutes($workday->balance->value));
         }
 
-        $monthMinutes = $positiveMonthBalance->diffInMinutes($negativeMonthBalance);
-
-        $sign = $positiveMonthBalance > $negativeMonthBalance ? '+' : '-';
-        $sign = $positiveMonthBalance == $negativeMonthBalance ? null : $sign;
-        
         return [
-            'sign' => $sign,
-            'value' => $zeroBase->addMinutes($monthMinutes)
+            'positive' => [
+                'FIFTY' => self::$positiveMonthBalance50->format('H:i'),
+                'HUNDRED' => self::$positiveMonthBalance100->format('H:i')
+            ],
+            'negative' => self::$negativeMonthBalance->format('H:i')
         ];
+    }
+
+    /**
+     * Adiciona diferença de horas trabalhadas ou faltantes no dia
+     * @param Workday $Workday
+     * @param $minutes
+     */
+    private static function addMonthBalance(Workday $Workday, $minutes)
+    {
+        if ($Workday->balance->sign == '+') {
+            self::addPositiveMonthBalance($minutes);
+        } elseif ($Workday->balance->sign == '-') {
+            self::$negativeMonthBalance->addMinutes($minutes);
+        }
+    }
+
+    /**
+     * Calculate extra hours worked
+     * Considerando duas faixas de hora, 50% até 2 horas, 100% acima de 2 horas
+     * @param int $extra_minutes_worked minutos extras trabalhados no dia
+     */
+    private static function addPositiveMonthBalance($extra_minutes_worked)
+    {
+        $fifty_percent_salaty = $extra_minutes_worked;
+        if ($extra_minutes_worked > self::FIFTY_PERCENT_SALARY_MINUTES_LIMIT) {
+            $hundred_percent_salary = $extra_minutes_worked - self::FIFTY_PERCENT_SALARY_MINUTES_LIMIT;
+            $fifty_percent_salaty = self::FIFTY_PERCENT_SALARY_MINUTES_LIMIT;
+            self::$positiveMonthBalance100->addMinutes($hundred_percent_salary);
+        }
+        self::$positiveMonthBalance50->addMinutes($fifty_percent_salaty);
     }
 
     /**
@@ -397,3 +433,5 @@ class Workday extends Model
     }
 
 }
+
+function printr($string){echo'<pre>';print_r($string);};function printrx($string){printr($string);die();};

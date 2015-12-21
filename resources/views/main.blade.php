@@ -70,11 +70,14 @@
                 <td>&nbsp;</td>
                 <td>Total:</td>
                 <td>
-                  @if ($monthlyBalances[$monthName]['sign'] == '-')
-                    <span class="negative-balance">&#45;@formatTime($monthlyBalances[$monthName]['value'])</span>
-                  @elseif ($monthlyBalances[$monthName]['sign'] == '+')
-                    <span class="positive-balance">&#43;@formatTime($monthlyBalances[$monthName]['value'])</span>
-                  @else
+                  @if ($monthlyBalances[$monthName]['positive'])
+                    <span class="positive-balance-fifty"><small>50%&nbsp;</small> &#43; {{ $monthlyBalances[$monthName]['positive']['FIFTY']}}</span><br>
+                    <span class="positive-balance-hundred"><small>100% </small> &#43; {{ $monthlyBalances[$monthName]['positive']['HUNDRED']}}</span><br>
+                  @endif
+                  @if ($monthlyBalances[$monthName]['negative'])
+                      <span class="negative-balance-final">&#45; {{ $monthlyBalances[$monthName]['negative']}}</span><br>
+                  @endif
+                  @if(!$monthlyBalances[$monthName]['negative'] && !$monthlyBalances[$monthName]['positive'])
                     <span class="">@formatTime($monthlyBalances[$monthName]['value'])</span>
                   @endif
                 </td>

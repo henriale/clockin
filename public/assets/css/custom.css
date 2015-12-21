@@ -65,11 +65,21 @@ tr td {
 .out-table tbody > tr td {
     border: none;
 }
-.positive-balance {
+.positive-balance, .positive-balance-fifty {
     color: #3C763D;
 }
-.negative-balance {
+.positive-balance-fifty {
+    margin-right: 30px;
+}
+.positive-balance-hundred {
+    margin-right: 30px;
+    color: darkgoldenrod;
+}
+.negative-balance, .negative-balance-final {
     color: #A94442;
+}
+.negative-balance-final {
+    margin-left: 5px;
 }
 
 .title {
