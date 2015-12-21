@@ -13,6 +13,12 @@
 $app->get('/login', ['uses'=>'Auth\AuthController@login']);
 $app->post('/login', ['uses'=>'Auth\AuthController@authenticate']);
 $app->get('/signup', ['uses'=>'Auth\AuthController@signup']);
+
+$app->get('/recover', ['uses'=>'Auth\RestorePasswordController@recover']);
+$app->post('/recover', ['uses'=>'Auth\RestorePasswordController@makeRecoverRequest']);
+$app->get('/restore', ['uses' => 'Auth\RestorePasswordController@createNewPassword']);
+$app->post('/restore', ['uses' => 'Auth\RestorePasswordController@rebuildPassword']);
+
 $app->post('/signup', ['uses'=>'Auth\AuthController@register']);
 $app->get('/logout', ['uses'=>'Auth\AuthController@logout']);
 

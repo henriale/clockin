@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Support\Facades\DB;
 
-class User extends Model implements AuthenticatableContract,
-                                    CanResetPasswordContract
+class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
     use Authenticatable, CanResetPassword;
 
@@ -21,6 +21,8 @@ class User extends Model implements AuthenticatableContract,
         'email',
         'password'
     ];
+
+    public static $matched_row = [];
     
     protected $hidden = ['password'];
 
@@ -37,5 +39,16 @@ class User extends Model implements AuthenticatableContract,
     public function setUsernameAttribute($username)
     {
         $this->attributes['username'] = strtolower($username);
+    }
+
+    public static function exists($field, $value)
+    {
+        $matched_row = DB::table('users')->where($field, $value)->get();
+        if (count($matched_row)) {
+            self::$matched_row = reset($matched_row);
+            return true;
+        }
+
+        return false;
     }
 }

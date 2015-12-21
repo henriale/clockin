@@ -5,15 +5,19 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Middleware\Mailler;
 
 class AuthController extends Controller
 {
     public function login()
     {
-        if (Auth::check() === true)
+        if (Auth::check() === true) {
             return redirect('/');
+        }
 
         return view('login');
     }
@@ -38,8 +42,14 @@ class AuthController extends Controller
             'password' => Request::input('password')
         ];
 
-        if( ! Auth::attempt($credentials, true))
-            return redirect('login');
+        if( ! Auth::attempt($credentials, true)) {
+            return view('/login')->with([
+                'messages' => [[
+                    'type' =>  'danger',
+                    'text' => 'Invalid e-mail or password'
+                ]]
+            ]);
+        }
 
         Auth::login(Auth::user());
         return redirect('/');
@@ -63,7 +73,10 @@ class AuthController extends Controller
         ];
 
         try {
-            $user = User::create($credentials);
+            User::create($credentials);
+            $mailler = new Mailler();
+            $mailler->subscribe($credentials['username'], $credentials['email']);
+
         } catch (QueryException $e) {
             $errorMessage = $e->errorInfo[2];
         }

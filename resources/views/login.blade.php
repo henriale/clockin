@@ -25,6 +25,7 @@
       <input type="email" name="email" class="form-control" placeholder="Email address" required="" autofocus="">
       <label for="inputPassword" class="sr-only">Password</label>
       <input type="password" name="password" class="form-control" placeholder="Password" required="">
+      <a class="btn btn-sm btn-secondary-outline btn-block" href="{{ url('/recover') }}" role="button">forgot password?</a>
       <button class="btn btn-lg btn-primary-outline btn-block" type="submit">Login</button>
       <a class="btn btn-lg btn-secondary-outline btn-block" href="{{ url('/signup') }}" role="button">Sign Up</a>
     </form>

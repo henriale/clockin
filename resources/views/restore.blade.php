@@ -17,30 +17,32 @@
 @stop
 
 @section('content')
-  <div class="col-sm-12" ng-controller="SignupController">
-    <form name="formSignup" class="form-signup" method="post" action="{{ url('signup') }}" novalidate>
-      <input type="hidden" name="_token" value="{!! csrf_token() !!}">
 
-      <label for="email" class="sr-only">Email address</label>
+  <div class="col-sm-12" ng-controller="SignupController">
+    <form name="formSignup" class="form-signup" method="post" action="{{ url('restore') }}" novalidate>
+      <input type="hidden" name="_token" value="{!! csrf_token() !!}">
+      <input type="hidden" name="remember_token" value="{!! $remember_token !!}">
+
+      <label for="email" class="sr-only">Confirm your email address</label>
       <input ng-model="email" required
              type="email"
              name="email"
              class="form-control"
-             placeholder="Email address">
+             placeholder="confirm your email address">
 
       <label for="password" class="sr-only">Password</label>
       <input ng-minlength="6" ng-change="passCheck()" ng-model="password" required
              type="password"
              name="password"
              class="form-control"
-             placeholder="Password">
+             placeholder="new password">
 
       <label for="repeatPassword" class="sr-only">Repeat password</label>
       <input ng-model="passwordConfirmation" ng-change="passCheck()" required
              type="password"
              name="passwordConfirmation"
              class="form-control"
-             placeholder="Repeat password">
+             placeholder="repeat new password">
       <br />
 
       <div ng-show="!is.empty(formSignup.$error) && formSignup.$dirty && formSignup.$invalid"
@@ -71,7 +73,7 @@
               ng-class="{disabled: formSignup.$invalid, 'btn-success-outline':formSignup.$valid}"
               ng-disabled="formSignup.$invalid"
               ng-click="formSignup.$valid && register()">
-          Sign up!
+          Reset password!
       </button>
     </form>
   </div>
