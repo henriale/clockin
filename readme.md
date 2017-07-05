@@ -1,3 +1,5 @@
+# DEPRECATED
+
 ## Clockin Working Time Manager
 
 [![Join the chat at https://gitter.im/Alexandreh/clockin](https://badges.gitter.im/Alexandreh/clockin.svg)](https://gitter.im/Alexandreh/clockin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
