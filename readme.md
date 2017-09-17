@@ -1,8 +1,8 @@
 # DEPRECATED
-
+![example](https://raw.githubusercontent.com/henriale/clockin/master/public/assets/img/profile/Screen%20Shot%202017-09-17%20at%2016.56.45.png)
 ## Clockin Working Time Manager
 
-[![Join the chat at https://gitter.im/Alexandreh/clockin](https://badges.gitter.im/Alexandreh/clockin.svg)](https://gitter.im/Alexandreh/clockin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/henriale/clockin](https://badges.gitter.im/Alexandreh/clockin.svg)](https://gitter.im/Alexandreh/clockin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Basic application, made with [Lumen Framework](http://lumen.laravel.com/), to store and organize the worked time in a month.
 It calculates the time worked above or under the estimated time based on users' arrivals and leavings from work.
@@ -14,7 +14,7 @@ It calculates the time worked above or under the estimated time based on users' 
 ## Getting Started
 ##### Download and install 
 ```bash
-$ git clone https://github.com/Alexandreh/clockin.git
+$ git clone https://github.com/henriale/clockin.git
 $ cd clockin
 $ composer install
 $ bower install
